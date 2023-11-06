@@ -1,6 +1,9 @@
 ﻿namespace polyclinic_service.Users.Model;
 
-public class UserType
+public enum UserType
 {
-    
+    None,
+    Patient,
+    Doctor,
+    Admin
 }
