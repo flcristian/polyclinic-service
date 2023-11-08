@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace polyclinic_service.Appointments.Model;
+namespace polyclinic_service.Appointments.Models;
 
 public class Appointment
 {

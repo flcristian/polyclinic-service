@@ -1,7 +1,12 @@
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
-
+using polyclinic_service.Appointments.Repository;
+using polyclinic_service.Appointments.Repository.Interfaces;
 using polyclinic_service.Data;
+using polyclinic_service.UserAppointments.Repository;
+using polyclinic_service.UserAppointments.Repository.Interfaces;
+using polyclinic_service.Users.Repository;
+using polyclinic_service.Users.Repository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +32,10 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 #endregion
 
 #region REPOSITORIES
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IUserAppointmentRepository, UserAppointmentRepository>();
 
 #endregion
 

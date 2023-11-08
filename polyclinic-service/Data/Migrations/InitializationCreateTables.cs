@@ -48,7 +48,7 @@ public class InitializationCreateTables : Migration
             .ForeignColumn("PatientId")
             .ToTable("Users")
             .PrimaryColumn("Id");
-        
+
         Create.ForeignKey("FK_UserAppointments_Doctor")
             .FromTable("UserAppointments")
             .ForeignColumn("DoctorId")

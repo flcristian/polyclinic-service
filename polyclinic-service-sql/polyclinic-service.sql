@@ -4,8 +4,8 @@ create table Appointments(
     EndDate datetime not null
 );
 
-drop table versioninfo;
-drop table users;
+select * from users;
+
 
 select * from Appointments;
 

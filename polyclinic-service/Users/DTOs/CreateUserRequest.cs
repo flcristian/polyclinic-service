@@ -1,14 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using polyclinic_service.Users.Models;
 
-namespace polyclinic_service.Users.Models;
+namespace polyclinic_service.Users.DTOs;
 
-public class User
+public class CreateUserRequest
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-    
     [Required]
     public string Name { get; set; }
     
