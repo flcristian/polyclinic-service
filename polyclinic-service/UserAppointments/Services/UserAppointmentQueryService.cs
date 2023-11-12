@@ -21,7 +21,7 @@ public class UserAppointmentQueryService : IUserAppointmentQueryService
 
         if (result.Count() == 0)
         {
-            throw new ItemsDoNotExist(Constants.APPOINTMENTS_DO_NOT_EXIST);
+            throw new ItemsDoNotExist(Constants.USER_APPOINTMENTS_DO_NOT_EXIST);
         }
 
         return result;
@@ -33,7 +33,7 @@ public class UserAppointmentQueryService : IUserAppointmentQueryService
 
         if (result == null)
         {
-            throw new ItemDoesNotExist(Constants.APPOINTMENT_DOES_NOT_EXIST);
+            throw new ItemDoesNotExist(Constants.USER_APPOINTMENT_DOES_NOT_EXIST);
         }
 
         return result;

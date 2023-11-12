@@ -13,7 +13,7 @@ public abstract class UserAppointmentsApiController : ControllerBase
     [Produces("application/json")]
     public abstract Task<ActionResult<IEnumerable<UserAppointment>>> GetAllUserAppointments();
     
-    [HttpGet("userAppointment/{id}")]
+    [HttpGet("user_appointment/{id}")]
     [ProducesResponseType(statusCode:200,type:typeof(UserAppointment))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]

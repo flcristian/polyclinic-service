@@ -1,4 +1,5 @@
-﻿using FluentMigrator;
+﻿using System.Data;
+using FluentMigrator;
 
 namespace polyclinic_service.Data.Migrations;
 
@@ -54,9 +55,9 @@ public class InitializationCreateTables : Migration
 
     private void CreateForeignKeys()
     {
-        Create.ForeignKey("FK_UserAppointments_Patient").FromTable("UserAppointments").ForeignColumn("PatientId").ToTable("Users").PrimaryColumn("Id");
-        Create.ForeignKey("FK_UserAppointments_Doctor").FromTable("UserAppointments").ForeignColumn("DoctorId").ToTable("Users").PrimaryColumn("Id");
-        Create.ForeignKey("FK_UserAppointments_Appointment").FromTable("UserAppointments").ForeignColumn("AppointmentId").ToTable("Appointments").PrimaryColumn("Id");
+        Create.ForeignKey("FK_UserAppointments_Patient").FromTable("UserAppointments").ForeignColumn("PatientId").ToTable("Users").PrimaryColumn("Id").OnDelete(Rule.Cascade);
+        Create.ForeignKey("FK_UserAppointments_Doctor").FromTable("UserAppointments").ForeignColumn("DoctorId").ToTable("Users").PrimaryColumn("Id").OnDelete(Rule.Cascade);
+        Create.ForeignKey("FK_UserAppointments_Appointment").FromTable("UserAppointments").ForeignColumn("AppointmentId").ToTable("Appointments").PrimaryColumn("Id").OnDelete(Rule.Cascade);
     }
 
     private void SeedInitialData()
