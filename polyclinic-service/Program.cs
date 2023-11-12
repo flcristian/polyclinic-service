@@ -52,7 +52,6 @@ builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<IAppointmentQueryService, AppointmentQueryService>();
 builder.Services.AddScoped<IAppointmentCommandService, AppointmentCommandService>();
 builder.Services.AddScoped<IUserAppointmentQueryService, UserAppointmentQueryService>();
-builder.Services.AddScoped<IUserAppointmentCommandService, UserAppointmentCommandService>();
 
 #endregion
 

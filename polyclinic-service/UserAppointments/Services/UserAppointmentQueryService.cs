@@ -1,4 +1,6 @@
-﻿using polyclinic_service.UserAppointments.Models;
+﻿using polyclinic_service.System.Constants;
+using polyclinic_service.System.Exceptions;
+using polyclinic_service.UserAppointments.Models;
 using polyclinic_service.UserAppointments.Repository.Interfaces;
 using polyclinic_service.UserAppointments.Services.Interfaces;
 
@@ -15,11 +17,25 @@ public class UserAppointmentQueryService : IUserAppointmentQueryService
     
     public async Task<IEnumerable<UserAppointment>> GetAllUserAppointments()
     {
-        throw new NotImplementedException();
+        IEnumerable<UserAppointment> result = await _repository.GetAllAsync();
+
+        if (result.Count() == 0)
+        {
+            throw new ItemsDoNotExist(Constants.APPOINTMENTS_DO_NOT_EXIST);
+        }
+
+        return result;
     }
 
     public async Task<UserAppointment> GetUserAppointmentById(int id)
     {
-        throw new NotImplementedException();
+        UserAppointment result = await _repository.GetByIdAsync(id);
+
+        if (result == null)
+        {
+            throw new ItemDoesNotExist(Constants.APPOINTMENT_DOES_NOT_EXIST);
+        }
+
+        return result;
     }
 }

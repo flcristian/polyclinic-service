@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using polyclinic_service.Appointments.DTOs;
 using polyclinic_service.Appointments.Models;
 

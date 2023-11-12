@@ -11,18 +11,9 @@ public class UserAppointment
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     
-    [Required]
-    public int PatientId { get; set; }
-    
     public virtual User Patient { get; set; }
     
-    [Required]
-    public int DoctorId { get; set; }
-    
     public virtual User Doctor { get; set; }
-    
-    [Required]
-    public int AppointmentId { get; set; }
     
     public virtual Appointment Appointment { get; set; }
 }

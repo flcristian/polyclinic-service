@@ -22,19 +22,16 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<UserAppointment>()
             .HasOne(userAppointment => userAppointment.Patient)
             .WithMany()
-            .HasForeignKey(userAppointment => userAppointment.PatientId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<UserAppointment>()
             .HasOne(userAppointment => userAppointment.Doctor)
             .WithMany()
-            .HasForeignKey(userAppointment => userAppointment.DoctorId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<UserAppointment>()
             .HasOne(userAppointment => userAppointment.Appointment)
             .WithMany()
-            .HasForeignKey(userAppointment => userAppointment.AppointmentId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

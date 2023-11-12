@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using polyclinic_service.Data;
-using polyclinic_service.UserAppointments.DTOs;
 using polyclinic_service.UserAppointments.Models;
 using polyclinic_service.UserAppointments.Repository.Interfaces;
 
@@ -34,33 +33,5 @@ public class UserAppointmentRepository : IUserAppointmentRepository
             .Include(userAppointment => userAppointment.Doctor)
             .Include(userAppointment => userAppointment.Appointment)
             .FirstOrDefaultAsync(userAppointment => userAppointment.Id == id))!;
-    }
-
-    public async Task<UserAppointment> CreateAsync(CreateUserAppointmentRequest userAppointmentRequest)
-    {
-        UserAppointment userAppointment = _mapper.Map<UserAppointment>(userAppointmentRequest);
-        _context.UserAppointments.Add(userAppointment);
-        await _context.SaveChangesAsync();
-        return userAppointment;
-    }
-
-    public async Task<UserAppointment> UpdateAsync(UpdateUserAppointmentRequest userAppointmentRequest)
-    {
-        UserAppointment userAppointment = await _context.UserAppointments.FindAsync(userAppointmentRequest.Id);
-
-        userAppointment.PatientId = userAppointmentRequest.PatientId;
-        userAppointment.DoctorId = userAppointmentRequest.DoctorId;
-        userAppointment.AppointmentId = userAppointmentRequest.AppointmentId;
-
-        _context.UserAppointments.Update(userAppointment);
-        await _context.SaveChangesAsync();
-        return userAppointment;
-    }
-
-    public async Task DeleteAsync(int id)
-    {
-        UserAppointment userAppointment = await _context.UserAppointments.FindAsync(id);
-        _context.UserAppointments.Remove(userAppointment);
-        await _context.SaveChangesAsync();
     }
 }
