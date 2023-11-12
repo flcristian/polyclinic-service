@@ -16,7 +16,6 @@ public class AppointmentCommandService : IAppointmentCommandService
 
     public async Task<Appointment> CreateAppointment(CreateAppointmentRequest appointmentRequest)
     {
-        throw new NotImplementedException();
     }
 
     public async Task<Appointment> UpdateAppointment(int id, UpdateAppointmentRequest appointmentRequest)

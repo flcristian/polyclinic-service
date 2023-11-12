@@ -29,6 +29,13 @@ public class AppointmentQueryService : IAppointmentQueryService
 
     public async Task<Appointment> GetAppointmentById(int id)
     {
-        throw new NotImplementedException();
+        Appointment result = await _repository.GetByIdAsync(id);
+
+        if (result == null)
+        {
+            throw new ItemDoesNotExist(Constants.APPOINTMENT_DOES_NOT_EXIST);
+        }
+
+        return result;
     }
 }
