@@ -19,7 +19,7 @@ public class UserAppointmentCommandService : IUserAppointmentCommandService
         throw new NotImplementedException();
     }
 
-    public async Task<UserAppointment> UpdateUserAppointment(int id, UpdateUserAppointmentRequest userAppointmentRequest)
+    public async Task<UserAppointment> UpdateUserAppointment(UpdateUserAppointmentRequest userAppointmentRequest)
     {
         throw new NotImplementedException();
     }

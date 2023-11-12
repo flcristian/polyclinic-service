@@ -19,7 +19,7 @@ public class UserCommandService : IUserCommandService
         throw new NotImplementedException();
     }
 
-    public async Task<User> UpdateUser(int id, UpdateUserRequest userRequest)
+    public async Task<User> UpdateUser(UpdateUserRequest userRequest)
     {
         throw new NotImplementedException();
     }

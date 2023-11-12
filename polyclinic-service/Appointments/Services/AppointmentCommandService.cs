@@ -2,6 +2,8 @@
 using polyclinic_service.Appointments.Models;
 using polyclinic_service.Appointments.Repository.Interfaces;
 using polyclinic_service.Appointments.Services.Interfaces;
+using polyclinic_service.System.Constants;
+using polyclinic_service.System.Exceptions;
 
 namespace polyclinic_service.Appointments.Services;
 
@@ -16,15 +18,34 @@ public class AppointmentCommandService : IAppointmentCommandService
 
     public async Task<Appointment> CreateAppointment(CreateAppointmentRequest appointmentRequest)
     {
+        Appointment appointment = await _repository.CreateAsync(appointmentRequest);
+
+        return appointment;
     }
 
-    public async Task<Appointment> UpdateAppointment(int id, UpdateAppointmentRequest appointmentRequest)
+    public async Task<Appointment> UpdateAppointment(UpdateAppointmentRequest appointmentRequest)
     {
-        throw new NotImplementedException();
+        Appointment appointment = await _repository.GetByIdAsync(appointmentRequest.Id);
+
+        if (appointment == null)
+        {
+            throw new ItemDoesNotExist(Constants.APPOINTMENT_DOES_NOT_EXIST);
+        }
+
+        appointment = await _repository.UpdateAsync(appointmentRequest);
+
+        return appointment;
     }
 
     public async Task DeleteAppointment(int id)
     {
-        throw new NotImplementedException();
+        Appointment appointment = await _repository.GetByIdAsync(id);
+
+        if (appointment == null)
+        {
+            throw new ItemDoesNotExist(Constants.APPOINTMENT_DOES_NOT_EXIST);
+        }
+            
+        await _repository.DeleteAsync(id);
     }
 }

@@ -37,9 +37,9 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<User> UpdateAsync(int id, UpdateUserRequest userRequest)
+    public async Task<User> UpdateAsync(UpdateUserRequest userRequest)
     {
-        User user = await _context.Users.FindAsync(id);
+        User user = await _context.Users.FindAsync(userRequest.Id);
 
         user.Name = userRequest.Name;
         user.Email = userRequest.Email;

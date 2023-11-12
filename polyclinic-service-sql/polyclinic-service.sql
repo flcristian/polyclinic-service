@@ -4,7 +4,7 @@ create table Appointments(
     EndDate datetime not null
 );
 
-select * from users;
+select * from Appointments;
 
 delete from versioninfo where Version = 208112023;
 

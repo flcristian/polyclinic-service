@@ -44,9 +44,9 @@ public class UserAppointmentRepository : IUserAppointmentRepository
         return userAppointment;
     }
 
-    public async Task<UserAppointment> UpdateAsync(int id, UpdateUserAppointmentRequest userAppointmentRequest)
+    public async Task<UserAppointment> UpdateAsync(UpdateUserAppointmentRequest userAppointmentRequest)
     {
-        UserAppointment userAppointment = await _context.UserAppointments.FindAsync(id);
+        UserAppointment userAppointment = await _context.UserAppointments.FindAsync(userAppointmentRequest.Id);
 
         userAppointment.PatientId = userAppointmentRequest.PatientId;
         userAppointment.DoctorId = userAppointmentRequest.DoctorId;

@@ -37,9 +37,9 @@ public class AppointmentRepository : IAppointmentRepository
         return appointment;
     }
 
-    public async Task<Appointment> UpdateAsync(int id, UpdateAppointmentRequest appointmentRequest)
+    public async Task<Appointment> UpdateAsync(UpdateAppointmentRequest appointmentRequest)
     {
-        Appointment appointment = await _context.Appointments.FindAsync(id);
+        Appointment appointment = await _context.Appointments.FindAsync(appointmentRequest.Id);
 
         appointment.StartDate = appointmentRequest.StartDate;
         appointment.EndDate = appointmentRequest.EndDate;
