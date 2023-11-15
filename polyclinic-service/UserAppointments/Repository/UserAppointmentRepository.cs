@@ -20,8 +20,7 @@ public class UserAppointmentRepository : IUserAppointmentRepository
     public async Task<IEnumerable<UserAppointment>> GetAllAsync()
     {
         return await _context.UserAppointments
-            .Include(userAppointment => userAppointment.Patient)
-            .Include(userAppointment => userAppointment.Doctor)
+            .Include(userAppointment => userAppointment.User)
             .Include(userAppointment => userAppointment.Appointment)
             .ToListAsync();
     }
@@ -29,8 +28,7 @@ public class UserAppointmentRepository : IUserAppointmentRepository
     public async Task<UserAppointment> GetByIdAsync(int id)
     {
         return (await _context.UserAppointments
-            .Include(userAppointment => userAppointment.Patient)
-            .Include(userAppointment => userAppointment.Doctor)
+            .Include(userAppointment => userAppointment.User)
             .Include(userAppointment => userAppointment.Appointment)
             .FirstOrDefaultAsync(userAppointment => userAppointment.Id == id))!;
     }

@@ -20,18 +20,15 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<UserAppointment>()
-            .HasOne(userAppointment => userAppointment.Patient)
-            .WithMany()
-            .OnDelete(DeleteBehavior.Cascade);
-
-        modelBuilder.Entity<UserAppointment>()
-            .HasOne(userAppointment => userAppointment.Doctor)
-            .WithMany()
+            .HasOne(userAppointment => userAppointment.User)
+            .WithMany(user => user.UserAppointments)
+            .HasForeignKey(userAppointment => userAppointment.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<UserAppointment>()
             .HasOne(userAppointment => userAppointment.Appointment)
-            .WithMany()
+            .WithMany(appointment => appointment.UserAppointments)
+            .HasForeignKey(userAppointment => userAppointment.AppointmentId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -41,22 +41,19 @@ public class InitializationCreateTables : Migration
     {
         Create.Table("UserAppointments")
             .WithColumn("Id").AsInt32().PrimaryKey().Identity()
-            .WithColumn("PatientId").AsInt32().NotNullable()
-            .WithColumn("DoctorId").AsInt32().NotNullable()
+            .WithColumn("UserId").AsInt32().NotNullable()
             .WithColumn("AppointmentId").AsInt32().NotNullable();
     }
 
     private void CreateIndexes()
     {
-        Create.Index("IX_UserAppointments_PatientId").OnTable("UserAppointments").OnColumn("PatientId").Ascending().WithOptions().NonClustered();
-        Create.Index("IX_UserAppointments_DoctorId").OnTable("UserAppointments").OnColumn("DoctorId").Ascending().WithOptions().NonClustered();
+        Create.Index("IX_UserAppointments_UserId").OnTable("UserAppointments").OnColumn("UserId").Ascending().WithOptions().NonClustered();
         Create.Index("IX_UserAppointments_AppointmentId").OnTable("UserAppointments").OnColumn("AppointmentId").Ascending().WithOptions().NonClustered();
     }
 
     private void CreateForeignKeys()
     {
-        Create.ForeignKey("FK_UserAppointments_Patient").FromTable("UserAppointments").ForeignColumn("PatientId").ToTable("Users").PrimaryColumn("Id").OnDelete(Rule.Cascade);
-        Create.ForeignKey("FK_UserAppointments_Doctor").FromTable("UserAppointments").ForeignColumn("DoctorId").ToTable("Users").PrimaryColumn("Id").OnDelete(Rule.Cascade);
+        Create.ForeignKey("FK_UserAppointments_User").FromTable("UserAppointments").ForeignColumn("UserId").ToTable("Users").PrimaryColumn("Id").OnDelete(Rule.Cascade);
         Create.ForeignKey("FK_UserAppointments_Appointment").FromTable("UserAppointments").ForeignColumn("AppointmentId").ToTable("Appointments").PrimaryColumn("Id").OnDelete(Rule.Cascade);
     }
 
@@ -70,11 +67,9 @@ public class InitializationCreateTables : Migration
     public override void Down()
     {
         Delete.ForeignKey("FK_UserAppointments_Appointment").OnTable("UserAppointments");
-        Delete.ForeignKey("FK_UserAppointments_Doctor").OnTable("UserAppointments");
-        Delete.ForeignKey("FK_UserAppointments_Patient").OnTable("UserAppointments");
+        Delete.ForeignKey("FK_UserAppointments_User").OnTable("UserAppointments");
         Delete.Index("IX_UserAppointments_AppointmentId").OnTable("UserAppointments");
-        Delete.Index("IX_UserAppointments_DoctorId").OnTable("UserAppointments");
-        Delete.Index("IX_UserAppointments_PatientId").OnTable("UserAppointments");
+        Delete.Index("IX_UserAppointments_UserId").OnTable("UserAppointments");
         Delete.Table("UserAppointments");
         Delete.Table("Appointments");
         Delete.Table("Users");
