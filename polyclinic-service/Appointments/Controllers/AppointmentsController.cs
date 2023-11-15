@@ -94,4 +94,9 @@ public class AppointmentsController : AppointmentsApiController
             return NotFound(ex.Message);
         }
     }
+
+    public override async Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailability(DateTime date)
+    {
+        throw new NotImplementedException();
+    }
 }

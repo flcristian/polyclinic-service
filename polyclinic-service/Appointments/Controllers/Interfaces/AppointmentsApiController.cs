@@ -36,4 +36,10 @@ public abstract class AppointmentsApiController : ControllerBase
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
     public abstract Task<ActionResult> DeleteAppointment([FromRoute]int id);
+
+    [HttpGet("check_availability_for_day")]
+    [ProducesResponseType(statusCode: 200, type: typeof(IEnumerable<FreeTimeSlotResponse>))]
+    [ProducesResponseType(statusCode: 404, type: typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailability([FromQuery]DateTime date);
 }

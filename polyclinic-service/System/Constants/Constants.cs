@@ -26,6 +26,12 @@ public static class Constants
     public const string USER_CREATED = "User successfully created.";
     public const string USER_UPDATED = "User successfully updated.";
     public const string USER_DELETED = "User successfully deleted.";
-    public const string USER_DOES_NOT_EXIST = "This user does not exist";
+    public const string USER_DOES_NOT_EXIST = "This user does not exist.";
     public const string USERS_DO_NOT_EXIST = "There are no users.";
+    
+    // TIME SLOTS
+    public const string NO_FREE_TIME_SLOTS_DAY = "There are no free time slots in that day.";
+    public const string NO_FREE_TIME_SLOTS_WEEK = "There are no free time slots in that week.";
+    public const string NO_FREE_TIME_SLOTS_MONTH = "There are no free time slots in that month.";
+    public const string NO_FREE_TIME_SLOTS_INTERVAL = "There are no free time slots in that interval.";
 }
