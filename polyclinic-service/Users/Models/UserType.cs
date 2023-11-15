@@ -1,4 +1,4 @@
-﻿namespace polyclinic_service.Users.Model;
+﻿namespace polyclinic_service.Users.Models;
 
 public enum UserType
 {

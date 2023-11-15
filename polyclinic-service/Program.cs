@@ -1,7 +1,18 @@
 using FluentMigrator.Runner;
 using Microsoft.EntityFrameworkCore;
-
+using polyclinic_service.Appointments.Repository;
+using polyclinic_service.Appointments.Repository.Interfaces;
+using polyclinic_service.Appointments.Services;
+using polyclinic_service.Appointments.Services.Interfaces;
 using polyclinic_service.Data;
+using polyclinic_service.UserAppointments.Repository;
+using polyclinic_service.UserAppointments.Repository.Interfaces;
+using polyclinic_service.UserAppointments.Services;
+using polyclinic_service.UserAppointments.Services.Interfaces;
+using polyclinic_service.Users.Repository;
+using polyclinic_service.Users.Repository.Interfaces;
+using polyclinic_service.Users.Services;
+using polyclinic_service.Users.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,9 +39,19 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 #region REPOSITORIES
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IUserAppointmentRepository, UserAppointmentRepository>();
+
 #endregion
 
 #region SERVICES
+
+builder.Services.AddScoped<IUserQueryService, UserQueryService>();
+builder.Services.AddScoped<IUserCommandService, UserCommandService>();
+builder.Services.AddScoped<IAppointmentQueryService, AppointmentQueryService>();
+builder.Services.AddScoped<IAppointmentCommandService, AppointmentCommandService>();
+builder.Services.AddScoped<IUserAppointmentQueryService, UserAppointmentQueryService>();
 
 #endregion
 
