@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "c9bab785-2d29-4c5e-b5e6-cd4ea0c20d32",
+		"name": "Polyclinic service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30666351"
+	},
+	"item": [
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "Get All Appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5275/api/v1/Appointments/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"Appointments",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Appointment By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5275/api/v1/Appointments/appointment/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"Appointments",
+								"appointment",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Appointment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"startDate\": \"2023-11-10T13:10:47.103Z\",\r\n  \"endDate\": \"2023-11-10T13:10:47.103Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5275/api/v1/Appointments/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"Appointments",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Appointment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 2,\r\n  \"startDate\": \"2023-11-10T13:10:47.106Z\",\r\n  \"endDate\": \"2023-11-10T13:10:47.106Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5275/api/v1/Appointments/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"Appointments",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Appointment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5275/api/v1/Appointments/delete/111",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"Appointments",
+								"delete",
+								"111"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Appointments",
+			"item": [
+				{
+					"name": "Get All User Appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5275/api/v1/UserAppointments/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"UserAppointments",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Appointment By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5275/api/v1/UserAppointments/user_appointment/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"UserAppointments",
+								"user_appointment",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5275/api/v1/Users/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"Users",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5275/api/v1/Users/user/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"Users",
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Andrei\",\r\n  \"email\": \"andrei@email.com\",\r\n  \"password\": \"parola\",\r\n  \"gender\": \"Male\",\r\n  \"age\": 22,\r\n  \"phone\": \"+4021121\",\r\n  \"type\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5275/api/v1/Users/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"Users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 51,\r\n  \"name\": \"Andrei\",\r\n  \"email\": \"andreimarius@email.com\",\r\n  \"password\": \"parola\",\r\n  \"gender\": \"Male\",\r\n  \"age\": 22,\r\n  \"phone\": \"+4021121\",\r\n  \"type\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5275/api/v1/Users/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"Users",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5275/api/v1/Users/delete/111",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5275",
+							"path": [
+								"api",
+								"v1",
+								"Users",
+								"delete",
+								"111"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -21,12 +21,16 @@ public class UserRepository : IUserRepository
 
     public async Task<IEnumerable<User>> GetAllAsync()
     {
-        return await _context.Users.ToListAsync();
+        return await _context.Users
+            .Include(user => user.UserAppointments)
+            .ToListAsync();
     }
 
     public async Task<User> GetByIdAsync(int id)
     {
-        return await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
+        return await _context.Users
+            .Include(user => user.UserAppointments)
+            .FirstOrDefaultAsync(user => user.Id == id);
     }
 
     public async Task<User> CreateAsync(CreateUserRequest userRequest)
@@ -37,9 +41,9 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<User> UpdateAsync(int id, UpdateUserRequest userRequest)
+    public async Task<User> UpdateAsync(UpdateUserRequest userRequest)
     {
-        User user = await _context.Users.FindAsync(id);
+        User user = await _context.Users.FindAsync(userRequest.Id);
 
         user.Name = userRequest.Name;
         user.Email = userRequest.Email;

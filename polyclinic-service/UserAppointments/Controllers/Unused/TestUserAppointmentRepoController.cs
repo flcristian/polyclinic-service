@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using polyclinic_service.UserAppointments.DTOs;
 using polyclinic_service.UserAppointments.Models;
 using polyclinic_service.UserAppointments.Repository.Interfaces;
@@ -46,4 +46,4 @@ public class TestUserAppointmentRepoController : ControllerBase
         await _repository.DeleteAsync(id);
         return Ok("It worked.");
     }
-}
+}*/

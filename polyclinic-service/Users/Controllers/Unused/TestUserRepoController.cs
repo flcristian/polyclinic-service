@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using polyclinic_service.Users.DTOs;
 using polyclinic_service.Users.Models;
 using polyclinic_service.Users.Repository.Interfaces;
@@ -46,4 +46,4 @@ public class TestUserRepoController : ControllerBase
         await _repository.DeleteAsync(id);
         return Ok("It worked.");
     }
-}
+}*/

@@ -8,6 +8,6 @@ public interface IAppointmentRepository
     Task<IEnumerable<Appointment>> GetAllAsync();
     Task<Appointment> GetByIdAsync(int id);
     Task<Appointment> CreateAsync(CreateAppointmentRequest appointmentRequest);
-    Task<Appointment> UpdateAsync(int id, UpdateAppointmentRequest appointmentRequest);
+    Task<Appointment> UpdateAsync(UpdateAppointmentRequest appointmentRequest);
     Task DeleteAsync(int id);
 }

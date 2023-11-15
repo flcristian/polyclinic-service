@@ -21,7 +21,10 @@ public class AppointmentRepository : IAppointmentRepository
 
     public async Task<IEnumerable<Appointment>> GetAllAsync()
     {
-        return await _context.Appointments.ToListAsync();
+        return await _context.Appointments
+            .Include(appointment => appointment.UserAppointments)
+                .ThenInclude(userAppointment => userAppointment.User)
+            .ToListAsync();
     }
 
     public async Task<Appointment> GetByIdAsync(int id)
@@ -37,9 +40,9 @@ public class AppointmentRepository : IAppointmentRepository
         return appointment;
     }
 
-    public async Task<Appointment> UpdateAsync(int id, UpdateAppointmentRequest appointmentRequest)
+    public async Task<Appointment> UpdateAsync(UpdateAppointmentRequest appointmentRequest)
     {
-        Appointment appointment = await _context.Appointments.FindAsync(id);
+        Appointment appointment = await _context.Appointments.FindAsync(appointmentRequest.Id);
 
         appointment.StartDate = appointmentRequest.StartDate;
         appointment.EndDate = appointmentRequest.EndDate;

@@ -25,4 +25,17 @@ public class CreateUserRequest
     
     [Required]
     public UserType Type { get; set; }
+    
+    public override string ToString()
+    {
+        String message = "";
+        message += $"Name: {Name}\n";
+        message += $"Email: {Email}\n";
+        message += $"Password: {Password}\n";
+        message += $"Gender: {Gender}\n";
+        message += $"Age: {Age}\n";
+        message += $"Phone: {Phone}\n";
+        message += $"Type: {Type}\n";
+        return message;
+    }
 }

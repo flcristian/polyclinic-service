@@ -28,12 +28,4 @@
       </Content>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Appointments\Controllers\Interfaces\" />
-      <Folder Include="System\Exceptions\" />
-      <Folder Include="UserAppointments\Controllers\Interfaces\" />
-      <Folder Include="Users\Controllers\Interfaces\" />
-      <Folder Include="Users\Services\" />
-    </ItemGroup>
-
 </Project>

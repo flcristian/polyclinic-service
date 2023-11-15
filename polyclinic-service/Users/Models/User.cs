@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using polyclinic_service.UserAppointments.Models;
 
 namespace polyclinic_service.Users.Models;
 
@@ -29,4 +30,6 @@ public class User
     
     [Required]
     public UserType Type { get; set; }
+    
+    public virtual List<UserAppointment> UserAppointments { get; set; }
 }

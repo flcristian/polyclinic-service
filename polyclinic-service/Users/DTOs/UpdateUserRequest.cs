@@ -6,6 +6,9 @@ namespace polyclinic_service.Users.DTOs;
 public class UpdateUserRequest
 {
     [Required]
+    public int Id { get; set; }
+    
+    [Required]
     public string Name { get; set; }
     
     [Required]
@@ -25,4 +28,18 @@ public class UpdateUserRequest
     
     [Required]
     public UserType Type { get; set; }
+    
+    public override string ToString()
+    {
+        String message = "";
+        message += $"Id: {Id}\n";
+        message += $"Name: {Name}\n";
+        message += $"Email: {Email}\n";
+        message += $"Password: {Password}\n";
+        message += $"Gender: {Gender}\n";
+        message += $"Age: {Age}\n";
+        message += $"Phone: {Phone}\n";
+        message += $"Type: {Type}\n";
+        return message;
+    }
 }
