@@ -94,4 +94,24 @@ public class AppointmentsController : AppointmentsApiController
             return NotFound(ex.Message);
         }
     }
+
+    public override Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForDay(DateTime date)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForWeek(DateTime date)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForMonth(DateTime date)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForInterval(DateTime startDate, DateTime endDate)
+    {
+        throw new NotImplementedException();
+    }
 }
