@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using polyclinic_service.Data;
 using polyclinic_service.UserAppointments.Models;
 using polyclinic_service.UserAppointments.Repository.Interfaces;
@@ -9,12 +8,10 @@ namespace polyclinic_service.UserAppointments.Repository;
 public class UserAppointmentRepository : IUserAppointmentRepository
 {
     private AppDbContext _context;
-    private IMapper _mapper;
 
-    public UserAppointmentRepository(AppDbContext context, IMapper mapper)
+    public UserAppointmentRepository(AppDbContext context)
     {
         _context = context;
-        _mapper = mapper;
     }
     
     public async Task<IEnumerable<UserAppointment>> GetAllAsync()

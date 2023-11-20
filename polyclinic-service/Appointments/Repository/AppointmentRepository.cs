@@ -29,7 +29,7 @@ public class AppointmentRepository : IAppointmentRepository
 
     public async Task<Appointment> GetByIdAsync(int id)
     {
-        return await _context.Appointments.FirstOrDefaultAsync(appointment => appointment.Id == id);
+        return (await _context.Appointments.FirstOrDefaultAsync(appointment => appointment.Id == id))!;
     }
 
     public async Task<Appointment> CreateAsync(CreateAppointmentRequest appointmentRequest)
@@ -42,7 +42,7 @@ public class AppointmentRepository : IAppointmentRepository
 
     public async Task<Appointment> UpdateAsync(UpdateAppointmentRequest appointmentRequest)
     {
-        Appointment appointment = await _context.Appointments.FindAsync(appointmentRequest.Id);
+        Appointment appointment = (await _context.Appointments.FindAsync(appointmentRequest.Id))!;
 
         appointment.StartDate = appointmentRequest.StartDate;
         appointment.EndDate = appointmentRequest.EndDate;
@@ -52,9 +52,32 @@ public class AppointmentRepository : IAppointmentRepository
         return appointment;
     }
 
+    public async Task<IEnumerable<FreeTimeSlotResponse>> GetFreeSlotsAsync(int userId, DateTime startDate, DateTime endDate)
+    {
+        var appointments = await _context.Appointments
+            .Where(appointment =>
+                _context.UserAppointments.Any(userAppointment => userAppointment.UserId == userId && userAppointment.AppointmentId == appointment.Id)
+                &&
+                (appointment.StartDate >= startDate && appointment.StartDate <= endDate ||
+                 appointment.EndDate >= startDate && appointment.EndDate <= endDate))
+            .OrderBy(appointment => appointment.StartDate)
+            .ToListAsync();
+
+        var freeSlots = new List<FreeTimeSlotResponse>();
+        
+        DateTime lastEndTime = startDate;
+        appointments.ForEach(appointment =>
+        {
+            freeSlots.Add(new FreeTimeSlotResponse { StartDate = lastEndTime, EndDate = appointment.StartDate });
+            lastEndTime = appointment.EndDate;
+        });
+        
+        return freeSlots;
+    }
+
     public async Task DeleteAsync(int id)
     {
-        Appointment appointment = await _context.Appointments.FindAsync(id);
+        Appointment appointment = (await _context.Appointments.FindAsync(id))!;
         _context.Appointments.Remove(appointment);
         await _context.SaveChangesAsync();
     }

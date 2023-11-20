@@ -40,8 +40,15 @@ public class AppointmentQueryService : IAppointmentQueryService
         return result;
     }
 
-    public async Task<IEnumerable<FreeTimeSlotResponse>> GetFreeTimeForInterval(DateTime startDate, DateTime endDate)
+    public async Task<IEnumerable<FreeTimeSlotResponse>> GetFreeSlotsForInterval(int userId, DateTime startDate, DateTime endDate)
     {
-        throw new NotImplementedException();
+        IEnumerable<FreeTimeSlotResponse> freeSlots = await _repository.GetFreeSlotsAsync(userId, startDate, endDate);
+
+        if (freeSlots.Count() == 0)
+        {
+            throw new ItemsDoNotExist(Constants.NO_FREE_TIME_SLOTS);
+        }
+
+        return freeSlots;
     }
 }

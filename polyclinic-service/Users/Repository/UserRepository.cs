@@ -28,9 +28,9 @@ public class UserRepository : IUserRepository
 
     public async Task<User> GetByIdAsync(int id)
     {
-        return await _context.Users
+        return (await _context.Users
             .Include(user => user.UserAppointments)
-            .FirstOrDefaultAsync(user => user.Id == id);
+            .FirstOrDefaultAsync(user => user.Id == id))!;
     }
 
     public async Task<User> CreateAsync(CreateUserRequest userRequest)
@@ -43,7 +43,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User> UpdateAsync(UpdateUserRequest userRequest)
     {
-        User user = await _context.Users.FindAsync(userRequest.Id);
+        User user = (await _context.Users.FindAsync(userRequest.Id))!;
 
         user.Name = userRequest.Name;
         user.Email = userRequest.Email;
@@ -60,7 +60,7 @@ public class UserRepository : IUserRepository
 
     public async Task DeleteAsync(int id)
     {
-        User user = await _context.Users.FindAsync(id);
+        User user = (await _context.Users.FindAsync(id))!;
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();
     }

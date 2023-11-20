@@ -30,8 +30,6 @@ public static class Constants
     public const string USERS_DO_NOT_EXIST = "There are no users.";
     
     // TIME SLOTS
-    public const string NO_FREE_TIME_SLOTS_DAY = "There are no free time slots in that day.";
-    public const string NO_FREE_TIME_SLOTS_WEEK = "There are no free time slots in that week.";
-    public const string NO_FREE_TIME_SLOTS_MONTH = "There are no free time slots in that month.";
-    public const string NO_FREE_TIME_SLOTS_INTERVAL = "There are no free time slots in that interval.";
+    public const string NO_FREE_TIME_SLOTS = "There are no free time slots.";
+    public const string NO_OCCUPIED_TIME_SLOTS = "There are no occupied time slots.";
 }
