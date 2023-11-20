@@ -1,4 +1,5 @@
-﻿using polyclinic_service.Appointments.Models;
+﻿using polyclinic_service.Appointments.DTOs;
+using polyclinic_service.Appointments.Models;
 using polyclinic_service.Appointments.Repository.Interfaces;
 using polyclinic_service.Appointments.Services.Interfaces;
 using polyclinic_service.System.Constants;
@@ -37,5 +38,10 @@ public class AppointmentQueryService : IAppointmentQueryService
         }
 
         return result;
+    }
+
+    public async Task<IEnumerable<FreeTimeSlotResponse>> GetFreeTimeForInterval(DateTime startDate, DateTime endDate)
+    {
+        throw new NotImplementedException();
     }
 }
