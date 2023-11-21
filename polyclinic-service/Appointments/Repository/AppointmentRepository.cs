@@ -18,7 +18,6 @@ public class AppointmentRepository : IAppointmentRepository
         _mapper = mapper;
     }
 
-
     public async Task<IEnumerable<Appointment>> GetAllAsync()
     {
         return await _context.Appointments
@@ -71,6 +70,7 @@ public class AppointmentRepository : IAppointmentRepository
             freeSlots.Add(new FreeTimeSlotResponse { StartDate = lastEndTime, EndDate = appointment.StartDate });
             lastEndTime = appointment.EndDate;
         });
+        freeSlots.Add(new FreeTimeSlotResponse { StartDate = lastEndTime, EndDate = endDate });
         
         return freeSlots;
     }
