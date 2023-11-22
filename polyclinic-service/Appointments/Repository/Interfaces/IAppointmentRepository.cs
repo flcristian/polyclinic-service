@@ -9,5 +9,6 @@ public interface IAppointmentRepository
     Task<Appointment> GetByIdAsync(int id);
     Task<Appointment> CreateAsync(CreateAppointmentRequest appointmentRequest);
     Task<Appointment> UpdateAsync(UpdateAppointmentRequest appointmentRequest);
+    Task<IEnumerable<FreeTimeSlotResponse>> GetFreeSlotsAsync(int userId, DateTime startDate, DateTime endDate);
     Task DeleteAsync(int id);
 }

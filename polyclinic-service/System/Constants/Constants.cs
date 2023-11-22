@@ -16,9 +16,6 @@ public static class Constants
     public const string APPOINTMENTS_DO_NOT_EXIST = "There are no appointments.";
     
     // USER APPOINTMENTS
-    public const string USER_APPOINTMENT_CREATED = "User appointment successfully created.";
-    public const string USER_APPOINTMENT_UPDATED = "User appointment successfully updated.";
-    public const string USER_APPOINTMENT_DELETED = "User appointment successfully deleted.";
     public const string USER_APPOINTMENT_DOES_NOT_EXIST = "This user appointment does not exist.";
     public const string USER_APPOINTMENTS_DO_NOT_EXIST = "There are no user appointments.";
     
@@ -26,6 +23,10 @@ public static class Constants
     public const string USER_CREATED = "User successfully created.";
     public const string USER_UPDATED = "User successfully updated.";
     public const string USER_DELETED = "User successfully deleted.";
-    public const string USER_DOES_NOT_EXIST = "This user does not exist";
+    public const string USER_DOES_NOT_EXIST = "This user does not exist.";
     public const string USERS_DO_NOT_EXIST = "There are no users.";
+    
+    // TIME SLOTS
+    public const string NO_FREE_TIME_SLOTS = "There are no free time slots.";
+    public const string NO_OCCUPIED_TIME_SLOTS = "There are no occupied time slots.";
 }

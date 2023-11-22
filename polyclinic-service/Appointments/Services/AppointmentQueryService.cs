@@ -1,4 +1,5 @@
-﻿using polyclinic_service.Appointments.Models;
+﻿using polyclinic_service.Appointments.DTOs;
+using polyclinic_service.Appointments.Models;
 using polyclinic_service.Appointments.Repository.Interfaces;
 using polyclinic_service.Appointments.Services.Interfaces;
 using polyclinic_service.System.Constants;
@@ -37,5 +38,17 @@ public class AppointmentQueryService : IAppointmentQueryService
         }
 
         return result;
+    }
+
+    public async Task<IEnumerable<FreeTimeSlotResponse>> GetFreeSlotsForInterval(int userId, DateTime startDate, DateTime endDate)
+    {
+        IEnumerable<FreeTimeSlotResponse> freeSlots = await _repository.GetFreeSlotsAsync(userId, startDate, endDate);
+
+        if (freeSlots.Count() == 0)
+        {
+            throw new ItemsDoNotExist(Constants.NO_FREE_TIME_SLOTS);
+        }
+
+        return freeSlots;
     }
 }

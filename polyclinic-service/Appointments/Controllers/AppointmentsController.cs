@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using polyclinic_service.Appointments.Controllers.Interfaces;
 using polyclinic_service.Appointments.DTOs;
@@ -91,6 +91,79 @@ public class AppointmentsController : AppointmentsApiController
         catch (ItemDoesNotExist ex)
         {
             _logger.LogInformation($"Rest response: {ex.Message}");
+            return NotFound(ex.Message);
+        }
+    }
+
+    public override async Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForDay(int userId, int day, int month, int year)
+    {
+        DateTime startDay = new DateTime(year, month, day);
+        DateTime endDay = startDay.AddDays(1);
+        _logger.LogInformation($"Rest request: Get free slots for user {userId} in day {day}-{month}-{year}");
+        
+        try
+        {
+            IEnumerable<FreeTimeSlotResponse> response =
+                await _queryService.GetFreeSlotsForInterval(userId, startDay, endDay);
+            return Ok(response);
+        }
+        catch (ItemsDoNotExist ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+    
+    public override async Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForWeek(int userId, int weekNumber, int year)
+    {
+        DateTime startDay = new DateTime(year, 1, 1); // First day of the year
+        DateTime startWeek = startDay.AddDays((weekNumber - 1) * 7 - (int)startDay.DayOfWeek + 1);
+        DateTime endWeek = startWeek.AddDays(7);
+        _logger.LogInformation($"Rest request: Get free slots for user {userId} in week {weekNumber} of year {year}");
+        
+        try
+        {
+            IEnumerable<FreeTimeSlotResponse> response =
+                await _queryService.GetFreeSlotsForInterval(userId, startWeek, endWeek);
+            return Ok(response);
+        }
+        catch (ItemsDoNotExist ex)
+        {
+            return NotFound(ex.Message);
+        }    
+    }
+
+    public override async Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForMonth(int userId, int month, int year)
+    {
+        DateTime startMonth = new DateTime(year, month, 1);
+        DateTime endMonth = startMonth.AddMonths(1);
+        _logger.LogInformation($"Rest request: Get free slots for user {userId} in month {month}-{year}");
+                                                                                                        
+        try
+        {
+            IEnumerable<FreeTimeSlotResponse> response =
+                await _queryService.GetFreeSlotsForInterval(userId, startMonth, endMonth);
+            return Ok(response);
+        }
+        catch (ItemsDoNotExist ex)
+        {
+            return NotFound(ex.Message);
+        }        
+    }
+
+    public override async Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForInterval(int userId, int startDateDay, int startDateMonth, int startDateYear, int endDateDay, int endDateMonth, int endDateYear)
+    {
+        DateTime startDate = new DateTime(startDateYear, startDateMonth, startDateDay);
+        DateTime endDate = new DateTime(endDateYear, endDateMonth, endDateDay);
+        _logger.LogInformation($"Rest request: Get free slots for user {userId} in interval {startDate} - {endDate}.");
+        try
+        {
+            IEnumerable<FreeTimeSlotResponse> response =
+                await _queryService.GetFreeSlotsForInterval(userId, startDate, endDate);
+
+            return Ok(response);
+        }
+        catch (ItemsDoNotExist ex)
+        {
             return NotFound(ex.Message);
         }
     }
