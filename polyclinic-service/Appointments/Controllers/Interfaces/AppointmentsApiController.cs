@@ -41,23 +41,23 @@ public abstract class AppointmentsApiController : ControllerBase
     [ProducesResponseType(statusCode: 200, type: typeof(IEnumerable<FreeTimeSlotResponse>))]
     [ProducesResponseType(statusCode: 404, type: typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForDay([FromQuery]int userId, [FromQuery]DateTime date);
+    public abstract Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForDay([FromQuery]int userId, [FromQuery]int day, [FromQuery]int month, [FromQuery]int year);
     
     [HttpGet("check_availability_for_week")]
     [ProducesResponseType(statusCode: 200, type: typeof(IEnumerable<FreeTimeSlotResponse>))]
     [ProducesResponseType(statusCode: 404, type: typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForWeek([FromQuery]int userId, [FromQuery]DateTime date);
+    public abstract Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForWeek([FromQuery]int userId, [FromQuery]int weekNumber, [FromQuery]int year);
     
     [HttpGet("check_availability_for_month")]
     [ProducesResponseType(statusCode: 200, type: typeof(IEnumerable<FreeTimeSlotResponse>))]
     [ProducesResponseType(statusCode: 404, type: typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForMonth([FromQuery]int userId, [FromQuery]DateTime date);
+    public abstract Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForMonth([FromQuery]int userId, [FromQuery]int month, [FromQuery]int year);
     
     [HttpGet("check_availability_for_interval")]
     [ProducesResponseType(statusCode: 200, type: typeof(IEnumerable<FreeTimeSlotResponse>))]
     [ProducesResponseType(statusCode: 404, type: typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForInterval([FromQuery]int userId, [FromQuery]DateTime startDate, [FromQuery]DateTime endDate);
+    public abstract Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForInterval([FromQuery]int userId, [FromQuery]int startDateDay, [FromQuery]int startDateMonth, [FromQuery]int startDateYear, [FromQuery]int endDateDay, [FromQuery]int endDateMonth, [FromQuery]int endDateYear);
 }
