@@ -33,4 +33,7 @@ public static class Constants
     // TIME SLOTS
     public const string NO_FREE_TIME_SLOTS = "There are no free time slots.";
     public const string NO_OCCUPIED_TIME_SLOTS = "There are no occupied time slots.";
+    public const string NO_APPOINTMENTS_IN_INTERVAL = "There are no appointments in that interval.";
+    public const string NO_APPOINTMENTS_IN_MONTH = "There are no appointments in that month.";
+    public const string NO_APPOINTMENTS_IN_WEEK = "There are no appointments in that week.";
 }

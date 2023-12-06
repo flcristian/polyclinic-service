@@ -51,4 +51,16 @@ public class AppointmentQueryService : IAppointmentQueryService
 
         return freeSlots;
     }
+
+    public async Task<DateResponse> DayWithMostAppointmentsInInterval(DateTime startDate, DateTime endDate)
+    {
+        DateResponse result = await _repository.DayWithMostAppointmentsInIntervalAsync(startDate, endDate);
+
+        if (result == null)
+        {
+            throw new ItemDoesNotExist(Constants.NO_APPOINTMENTS_IN_INTERVAL);
+        }
+
+        return result;
+    }
 }
