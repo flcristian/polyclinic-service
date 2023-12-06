@@ -9,7 +9,8 @@ namespace polyclinic_service.UserAppointments.Services;
 public class UserAppointmentQueryService : IUserAppointmentQueryService
 {
     private IUserAppointmentRepository _repository;
-    
+
+
     public UserAppointmentQueryService(IUserAppointmentRepository repository)
     {
         _repository = repository;

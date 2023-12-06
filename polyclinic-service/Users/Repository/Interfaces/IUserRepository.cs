@@ -10,4 +10,10 @@ public interface IUserRepository
     Task<User> CreateAsync(CreateUserRequest userRequest);
     Task<User> UpdateAsync(UpdateUserRequest userRequest);
     Task DeleteAsync(int id);
+    Task<User> GetDoctorWithMostAppointmentsAsync();
+    Task<User> GetPatientWithMostAppointmentsAsync();
+    Task<IEnumerable<User>> GetDoctorsByAppointmentsDecreasingAsync();
+    Task<IEnumerable<User>> GetDoctorsByAppointmentsIncreasingAsync();
+    Task<IEnumerable<User>> GetPatientsByAppointmentsDecreasingAsync();
+    Task<IEnumerable<User>> GetPatientsByAppointmentsIncreasingAsync();
 }
