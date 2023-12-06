@@ -93,4 +93,100 @@ public class UsersController : UsersApiController
             return NotFound(ex.Message);
         }
     }
+
+    public override async Task<ActionResult<User>> GetDoctorWithMostAppointments()
+    {
+        _logger.LogInformation($"Rest request: Get doctor with most appointments");
+        try
+        {
+            User doctor = await _queryService.GetDoctorWithMostAppointments();
+
+            return Ok(doctor);
+        }
+        catch (ItemDoesNotExist ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return NotFound(ex.Message);
+        }
+    }
+    
+    public override async Task<ActionResult<User>> GetPatientWithMostAppointments()
+    {
+        _logger.LogInformation($"Rest request: Get patient with most appointments");
+        try
+        {
+            User patient = await _queryService.GetPatientWithMostAppointments();
+
+            return Ok(patient);
+        }
+        catch (ItemDoesNotExist ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return NotFound(ex.Message);
+        }
+    }
+
+    public override async Task<ActionResult<IEnumerable<User>>> GetAllDoctorsSortedByAppointmentsDecreasing()
+    {
+        _logger.LogInformation($"Rest request: Get all doctors sorted by appointment count in decreasing order.");
+        try
+        {
+            IEnumerable<User> doctors = await _queryService.GetDoctorsByAppointmentsDecreasing();
+
+            return Ok(doctors);
+        }
+        catch (ItemsDoNotExist ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return NotFound(ex.Message);
+        }
+    }
+
+    public override async Task<ActionResult<IEnumerable<User>>> GetAllDoctorsSortedByAppointmentsIncreasing()
+    {
+        _logger.LogInformation($"Rest request: Get all doctors sorted by appointment count in increasing order.");
+        try
+        {
+            IEnumerable<User> doctors = await _queryService.GetDoctorsByAppointmentsIncreasing();
+
+            return Ok(doctors);
+        }
+        catch (ItemsDoNotExist ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return NotFound(ex.Message);
+        }
+    }
+    
+    public override async Task<ActionResult<IEnumerable<User>>> GetAllPatientsSortedByAppointmentsDecreasing()
+    {
+        _logger.LogInformation($"Rest request: Get all patients sorted by appointment count in decreasing order.");
+        try
+        {
+            IEnumerable<User> patients = await _queryService.GetPatientsByAppointmentsDecreasing();
+
+            return Ok(patients);
+        }
+        catch (ItemsDoNotExist ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return NotFound(ex.Message);
+        }
+    }
+
+    public override async Task<ActionResult<IEnumerable<User>>> GetAllPatientsSortedByAppointmentsIncreasing()
+    {
+        _logger.LogInformation($"Rest request: Get all patients sorted by appointment count in increasing order.");
+        try
+        {
+            IEnumerable<User> patients = await _queryService.GetPatientsByAppointmentsIncreasing();
+
+            return Ok(patients);
+        }
+        catch (ItemsDoNotExist ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return NotFound(ex.Message);
+        }
+    }
 }

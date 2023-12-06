@@ -60,4 +60,16 @@ public abstract class AppointmentsApiController : ControllerBase
     [ProducesResponseType(statusCode: 404, type: typeof(String))]
     [Produces("application/json")]
     public abstract Task<ActionResult<IEnumerable<FreeTimeSlotResponse>>> CheckAvailabilityForInterval([FromQuery]int userId, [FromQuery]int startDateDay, [FromQuery]int startDateMonth, [FromQuery]int startDateYear, [FromQuery]int endDateDay, [FromQuery]int endDateMonth, [FromQuery]int endDateYear);
+
+    [HttpGet("day_with_most_appointments_from_month")]
+    [ProducesResponseType(statusCode: 200, type: typeof(DateResponse))]
+    [ProducesResponseType(statusCode: 404, type: typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult<DateResponse>> GetDayWithMostAppointmentsFromMonth([FromQuery] int month, [FromQuery]int year);
+    
+    [HttpGet("day_with_most_appointments_from_week")]
+    [ProducesResponseType(statusCode: 200, type: typeof(DateResponse))]
+    [ProducesResponseType(statusCode: 404, type: typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult<DateResponse>> GetDayWithMostAppointmentsFromWeek([FromQuery] int weekNumber, [FromQuery]int year);
 }

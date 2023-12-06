@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using polyclinic_service.Appointments.Controllers.Interfaces;
 using polyclinic_service.Appointments.DTOs;
 using polyclinic_service.Appointments.Models;
@@ -159,6 +158,43 @@ public class AppointmentsController : AppointmentsApiController
         {
             IEnumerable<FreeTimeSlotResponse> response =
                 await _queryService.GetFreeSlotsForInterval(userId, startDate, endDate);
+
+            return Ok(response);
+        }
+        catch (ItemsDoNotExist ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
+    public override async Task<ActionResult<DateResponse>> GetDayWithMostAppointmentsFromMonth(int month, int year)
+    {
+        DateTime startMonth = new DateTime(year, month, 1);
+        DateTime endMonth = startMonth.AddMonths(1);
+        _logger.LogInformation($"Rest request: Get day with most appointments in month {month}-{year}");
+        try
+        {
+            DateResponse response =
+                await _queryService.DayWithMostAppointmentsInInterval(startMonth, endMonth);
+
+            return Ok(response);
+        }
+        catch (ItemsDoNotExist ex)
+        {
+            return NotFound(ex.Message);
+        }
+    }
+
+    public override async Task<ActionResult<DateResponse>> GetDayWithMostAppointmentsFromWeek(int weekNumber, int year)
+    {
+        DateTime startDay = new DateTime(year, 1, 1); // First day of the year
+        DateTime startWeek = startDay.AddDays((weekNumber - 1) * 7 - (int)startDay.DayOfWeek + 1);
+        DateTime endWeek = startWeek.AddDays(7);
+        _logger.LogInformation($"Rest request: Get day with most appointments in week {weekNumber} of year {year}");
+        try
+        {
+            DateResponse response =
+                await _queryService.DayWithMostAppointmentsInInterval(startWeek, endWeek);
 
             return Ok(response);
         }

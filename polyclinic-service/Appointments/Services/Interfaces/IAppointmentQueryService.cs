@@ -8,4 +8,5 @@ public interface IAppointmentQueryService
     Task<IEnumerable<Appointment>> GetAllAppointments();
     Task<Appointment> GetAppointmentById(int id);
     Task<IEnumerable<FreeTimeSlotResponse>> GetFreeSlotsForInterval(int userId, DateTime startDate, DateTime endDate);
+    Task<DateResponse> DayWithMostAppointmentsInInterval(DateTime startDate, DateTime endDate);
 }

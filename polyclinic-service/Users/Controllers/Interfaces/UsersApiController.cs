@@ -36,4 +36,40 @@ public abstract class UsersApiController : ControllerBase
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
     public abstract Task<ActionResult> DeleteUser([FromRoute]int id);
+    
+    [HttpGet("doctor_with_most_appointments")]
+    [ProducesResponseType(statusCode:200,type:typeof(User))]
+    [ProducesResponseType(statusCode:404,type:typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult<User>> GetDoctorWithMostAppointments();
+    
+    [HttpGet("patient_with_most_appointments")]
+    [ProducesResponseType(statusCode:200,type:typeof(User))]
+    [ProducesResponseType(statusCode:404,type:typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult<User>> GetPatientWithMostAppointments();
+    
+    [HttpGet("doctors_sorted_by_appointment_count_decreasing")]
+    [ProducesResponseType(statusCode:200,type:typeof(List<User>))]
+    [ProducesResponseType(statusCode:404,type:typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult<IEnumerable<User>>> GetAllDoctorsSortedByAppointmentsDecreasing();
+    
+    [HttpGet("doctors_sorted_by_appointment_count_increasing")]
+    [ProducesResponseType(statusCode:200,type:typeof(List<User>))]
+    [ProducesResponseType(statusCode:404,type:typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult<IEnumerable<User>>> GetAllDoctorsSortedByAppointmentsIncreasing();
+
+    [HttpGet("patients_sorted_by_appointment_count_decreasing")]
+    [ProducesResponseType(statusCode: 200, type: typeof(List<User>))]
+    [ProducesResponseType(statusCode: 404, type: typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult<IEnumerable<User>>> GetAllPatientsSortedByAppointmentsDecreasing();
+    
+    [HttpGet("patients_sorted_by_appointment_count_increasing")]
+    [ProducesResponseType(statusCode:200,type:typeof(List<User>))]
+    [ProducesResponseType(statusCode:404,type:typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult<IEnumerable<User>>> GetAllPatientsSortedByAppointmentsIncreasing();
 }

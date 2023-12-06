@@ -18,6 +18,7 @@ public static class Constants
     // USER APPOINTMENTS
     public const string USER_APPOINTMENT_DOES_NOT_EXIST = "This user appointment does not exist.";
     public const string USER_APPOINTMENTS_DO_NOT_EXIST = "There are no user appointments.";
+    public const string USER_HAS_NO_APPOINTMENTS = "This user has no appointments.";
     
     // USERS
     public const string USER_CREATED = "User successfully created.";
@@ -25,8 +26,14 @@ public static class Constants
     public const string USER_DELETED = "User successfully deleted.";
     public const string USER_DOES_NOT_EXIST = "This user does not exist.";
     public const string USERS_DO_NOT_EXIST = "There are no users.";
+    public const string USER_NOT_DOCTOR_OR_PATIENT = "This user isn't a doctor nor a pacient.";
+    public const string NO_DOCTORS_HAVE_APPOINTMENTS = "There are no doctors with appointments.";
+    public const string NO_PATIENTS_HAVE_APPOINTMENTS = "There are no patients with appointments.";
     
     // TIME SLOTS
     public const string NO_FREE_TIME_SLOTS = "There are no free time slots.";
     public const string NO_OCCUPIED_TIME_SLOTS = "There are no occupied time slots.";
+    public const string NO_APPOINTMENTS_IN_INTERVAL = "There are no appointments in that interval.";
+    public const string NO_APPOINTMENTS_IN_MONTH = "There are no appointments in that month.";
+    public const string NO_APPOINTMENTS_IN_WEEK = "There are no appointments in that week.";
 }
