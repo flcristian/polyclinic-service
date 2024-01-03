@@ -5,6 +5,10 @@ using polyclinic_service.Appointments.Repository.Interfaces;
 using polyclinic_service.Appointments.Services;
 using polyclinic_service.Appointments.Services.Interfaces;
 using polyclinic_service.Data;
+using polyclinic_service.Schedules.Repository;
+using polyclinic_service.Schedules.Repository.Interfaces;
+using polyclinic_service.Schedules.Services;
+using polyclinic_service.Schedules.Services.Interfaces;
 using polyclinic_service.UserAppointments.Repository;
 using polyclinic_service.UserAppointments.Repository.Interfaces;
 using polyclinic_service.UserAppointments.Services;
@@ -42,6 +46,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IUserAppointmentRepository, UserAppointmentRepository>();
+builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 
 #endregion
 
@@ -52,6 +57,8 @@ builder.Services.AddScoped<IUserCommandService, UserCommandService>();
 builder.Services.AddScoped<IAppointmentQueryService, AppointmentQueryService>();
 builder.Services.AddScoped<IAppointmentCommandService, AppointmentCommandService>();
 builder.Services.AddScoped<IUserAppointmentQueryService, UserAppointmentQueryService>();
+builder.Services.AddScoped<IScheduleQueryService, ScheduleQueryService>();
+builder.Services.AddScoped<IScheduleCommandService, ScheduleCommandService>();
 
 #endregion
 
@@ -70,7 +77,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseExceptionHandler("/Home/Error");
-app.UseDeveloperExceptionPage();
+app.UseDeveloperExceptionPage();    
 
 using (var scope = app.Services.CreateScope())
 {
