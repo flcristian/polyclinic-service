@@ -28,7 +28,9 @@ public class AppointmentRepository : IAppointmentRepository
 
     public async Task<Appointment> GetByIdAsync(int id)
     {
-        return (await _context.Appointments.FirstOrDefaultAsync(appointment => appointment.Id == id))!;
+        return (await _context.Appointments
+            .Include(appointment => appointment.UserAppointments)
+            .FirstOrDefaultAsync(appointment => appointment.Id == id))!;
     }
 
     public async Task<Appointment> CreateAsync(CreateAppointmentRequest appointmentRequest)
