@@ -70,7 +70,7 @@ public class AppDbContext : DbContext
             .HasOne(schedule => schedule.Doctor)
             .WithOne(user => user.WorkSchedule)
             .HasForeignKey<Schedule>(schedule => schedule.DoctorId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Restrict);
         
         modelBuilder.Entity<User>()
             .HasOne(user => user.WorkSchedule)
