@@ -5,6 +5,8 @@ using polyclinic_service.Appointments.Repository.Interfaces;
 using polyclinic_service.Appointments.Services;
 using polyclinic_service.Appointments.Services.Interfaces;
 using polyclinic_service.Data;
+using polyclinic_service.Emails.Services;
+using polyclinic_service.Emails.Services.Interfaces;
 using polyclinic_service.Schedules.Repository;
 using polyclinic_service.Schedules.Repository.Interfaces;
 using polyclinic_service.Schedules.Services;
@@ -60,6 +62,8 @@ builder.Services.AddScoped<IUserAppointmentQueryService, UserAppointmentQuerySer
 builder.Services.AddScoped<IUserAppointmentCommandService, UserAppointmentCommandService>();
 builder.Services.AddScoped<IScheduleQueryService, ScheduleQueryService>();
 builder.Services.AddScoped<IScheduleCommandService, ScheduleCommandService>();
+
+builder.Services.AddTransient<IEmailSenderService, EmailSenderService>();
 
 #endregion
 

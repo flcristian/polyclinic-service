@@ -2,6 +2,15 @@
 
 public static class Constants
 {
+    // EMAIL SENDER 
+    public const string EMAIL_SMTP_SERVER = "smtp-mail.outlook.com";
+    public const int EMAIL_SMTP_PORT = 587;
+    public const string EMAIL_SENDER_ADDRESS = "pspsmtp@outlook.com";
+    public const string EMAIL_SENDER_PASSWORD = "pa-ro/la";
+    
+    // EMAIL CONTROLLER
+    public const string EMAIL_SENT = "Email sent successfully.";
+    
     // DATE FORMATS
     public const string SQL_DATE_FORMAT = "yyyy-MM-dd HH:mm";
     public const string STANDARD_DATE_FORMAT = "dd.MM.yyyy HH:mm";
