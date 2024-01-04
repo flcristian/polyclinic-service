@@ -36,4 +36,11 @@ public static class Constants
     public const string NO_APPOINTMENTS_IN_INTERVAL = "There are no appointments in that interval.";
     public const string NO_APPOINTMENTS_IN_MONTH = "There are no appointments in that month.";
     public const string NO_APPOINTMENTS_IN_WEEK = "There are no appointments in that week.";
+    
+    // SCHEDULES
+    public const string SCHEDULE_CREATED = "Schedule successfully created.";
+    public const string SCHEDULE_UPDATED = "Schedule successfully updated.";
+    public const string SCHEDULE_DELETED = "Schedule successfully deleted.";
+    public const string SCHEDULE_DOES_NOT_EXIST = "This schedule does not exist";
+    public const string SCHEDULES_DO_NOT_EXIST = "There are no schedules.";
 }
