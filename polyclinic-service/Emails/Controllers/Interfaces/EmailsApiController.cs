@@ -13,4 +13,11 @@ public abstract class EmailsApiController : ControllerBase
     [ProducesResponseType(statusCode: 500, type: typeof(String))]
     [Produces("application/json")]
     public abstract Task<ActionResult> SendEmail([FromBody]SendEmailRequest request);
+    
+    [HttpPost("send_appointment_details")]
+    [ProducesResponseType(statusCode: 200, type: typeof(String))]
+    [ProducesResponseType(statusCode: 400, type: typeof(String))]
+    [ProducesResponseType(statusCode: 500, type: typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult> SendAppointmentDetails([FromBody]SendAppointmentDetailsRequest request);
 }

@@ -44,4 +44,30 @@ public class EmailsController : EmailsApiController
             return BadRequest(ex.Message);
         }
     }
+
+    public override async Task<ActionResult> SendAppointmentDetails(SendAppointmentDetailsRequest request)
+    {
+        _logger.LogInformation($"Rest request: Send appointment with id {request.AppointmentId} to user with id {request.UserId}.");
+        try
+        {
+            await _service.SendAppointmentDetailsAsync(request);
+
+            return Ok(Constants.EMAIL_SENT);
+        }
+        catch (SmtpException ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return StatusCode(500, ex.Message);
+        }
+        catch (TimeoutException ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return StatusCode(500, ex.Message);
+        }
+        catch (ObjectDisposedException ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return BadRequest(ex.Message);
+        }
+    }
 }

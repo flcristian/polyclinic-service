@@ -5,4 +5,6 @@ namespace polyclinic_service.Emails.Services.Interfaces;
 public interface IEmailSenderService
 {
     Task SendEmailAsync(SendEmailRequest request);
+
+    Task SendAppointmentDetailsAsync(SendAppointmentDetailsRequest request);
 }
