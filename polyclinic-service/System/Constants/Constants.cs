@@ -19,6 +19,9 @@ public static class Constants
     public const string USER_APPOINTMENT_DOES_NOT_EXIST = "This user appointment does not exist.";
     public const string USER_APPOINTMENTS_DO_NOT_EXIST = "There are no user appointments.";
     public const string USER_HAS_NO_APPOINTMENTS = "This user has no appointments.";
+    public const string USER_APPOINTMENT_CREATED = "User appointment successfully created.";
+    public const string USER_APPOINTMENT_UPDATED = "User appointment successfully updated.";
+    public const string USER_APPOINTMENT_DELETED = "User appointment successfully deleted.";
     
     // USERS
     public const string USER_CREATED = "User successfully created.";
