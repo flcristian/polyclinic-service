@@ -24,6 +24,12 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users
             .Include(user => user.UserAppointments)
+            .Include(user => user.WorkSchedule)
+            .Include(user => user.WorkSchedule.MondaySchedule)
+            .Include(user => user.WorkSchedule.TuesdaySchedule)
+            .Include(user => user.WorkSchedule.WednesdaySchedule)
+            .Include(user => user.WorkSchedule.ThursdaySchedule)
+            .Include(user => user.WorkSchedule.FridaySchedule)
             .ToListAsync();
     }
 
@@ -31,6 +37,12 @@ public class UserRepository : IUserRepository
     {
         return (await _context.Users
             .Include(user => user.UserAppointments)
+            .Include(user => user.WorkSchedule)
+            .Include(user => user.WorkSchedule.MondaySchedule)
+            .Include(user => user.WorkSchedule.TuesdaySchedule)
+            .Include(user => user.WorkSchedule.WednesdaySchedule)
+            .Include(user => user.WorkSchedule.ThursdaySchedule)
+            .Include(user => user.WorkSchedule.FridaySchedule)
             .FirstOrDefaultAsync(user => user.Id == id))!;
     }
 
