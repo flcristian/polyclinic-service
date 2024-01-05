@@ -71,11 +71,5 @@ public class AppDbContext : DbContext
             .WithOne(user => user.WorkSchedule)
             .HasForeignKey<Schedule>(schedule => schedule.DoctorId)
             .OnDelete(DeleteBehavior.Restrict);
-        
-        modelBuilder.Entity<User>()
-            .HasOne(user => user.WorkSchedule)
-            .WithOne(schedule => schedule.Doctor)
-            .HasForeignKey<User>(user => user.Id)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }
