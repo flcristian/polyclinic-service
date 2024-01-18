@@ -40,31 +40,31 @@ public class AppDbContext : DbContext
             .HasOne(s => s.MondaySchedule)
             .WithMany()
             .HasForeignKey(s => s.MondayScheduleId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Schedule>()
             .HasOne(s => s.TuesdaySchedule)
             .WithMany()
             .HasForeignKey(s => s.TuesdayScheduleId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Schedule>()
             .HasOne(s => s.WednesdaySchedule)
             .WithMany()
             .HasForeignKey(s => s.WednesdayScheduleId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Schedule>()
             .HasOne(s => s.ThursdaySchedule)
             .WithMany()
             .HasForeignKey(s => s.ThursdayScheduleId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Schedule>()
             .HasOne(s => s.FridaySchedule)
             .WithMany()
             .HasForeignKey(s => s.FridayScheduleId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Schedule>()
             .HasOne(schedule => schedule.Doctor)

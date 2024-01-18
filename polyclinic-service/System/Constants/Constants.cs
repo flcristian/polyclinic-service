@@ -41,6 +41,7 @@ public static class Constants
     public const string USER_NOT_DOCTOR_OR_PATIENT = "This user isn't a doctor nor a pacient.";
     public const string NO_DOCTORS_HAVE_APPOINTMENTS = "There are no doctors with appointments.";
     public const string NO_PATIENTS_HAVE_APPOINTMENTS = "There are no patients with appointments.";
+    public const string USER_NOT_DOCTOR = "This user is not a doctor.";
     
     // TIME SLOTS
     public const string NO_FREE_TIME_SLOTS = "There are no free time slots.";
@@ -55,4 +56,8 @@ public static class Constants
     public const string SCHEDULE_DELETED = "Schedule successfully deleted.";
     public const string SCHEDULE_DOES_NOT_EXIST = "This schedule does not exist";
     public const string SCHEDULES_DO_NOT_EXIST = "There are no schedules.";
+    
+    // USER ACTIONS
+    public const string APPOINTMENT_SCHEDULED = "Appointment successfully scheduled. Emails with details were sent!";
+    public const string APPOINTMENT_NOT_IN_SCHEDULE = "The doctor is not available at that time.";
 }

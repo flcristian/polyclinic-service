@@ -42,11 +42,11 @@ public class CreateScheduleTables : Migration
     private void CreateForeignKeys()
     {
         Create.ForeignKey("FK_Schedules_DoctorId").FromTable("Schedules").ForeignColumn("DoctorId").ToTable("Users").PrimaryColumn("Id").OnDelete(Rule.Cascade);
-        Create.ForeignKey("FK_Schedules_MondayScheduleId").FromTable("Schedules").ForeignColumn("MondayScheduleId").ToTable("ScheduleSlots").PrimaryColumn("Id").OnDelete(Rule.SetNull);
-        Create.ForeignKey("FK_Schedules_TuesdayScheduleId").FromTable("Schedules").ForeignColumn("TuesdayScheduleId").ToTable("ScheduleSlots").PrimaryColumn("Id").OnDelete(Rule.SetNull);
-        Create.ForeignKey("FK_Schedules_WednesdayScheduleId").FromTable("Schedules").ForeignColumn("WednesdayScheduleId").ToTable("ScheduleSlots").PrimaryColumn("Id").OnDelete(Rule.SetNull);
-        Create.ForeignKey("FK_Schedules_ThursdayScheduleId").FromTable("Schedules").ForeignColumn("ThursdayScheduleId").ToTable("ScheduleSlots").PrimaryColumn("Id").OnDelete(Rule.SetNull);
-        Create.ForeignKey("FK_Schedules_FridayScheduleId").FromTable("Schedules").ForeignColumn("FridayScheduleId").ToTable("ScheduleSlots").PrimaryColumn("Id").OnDelete(Rule.SetNull);
+        Create.ForeignKey("FK_Schedules_MondayScheduleId").FromTable("Schedules").ForeignColumn("MondayScheduleId").ToTable("ScheduleSlots").PrimaryColumn("Id").OnDelete(Rule.Cascade);
+        Create.ForeignKey("FK_Schedules_TuesdayScheduleId").FromTable("Schedules").ForeignColumn("TuesdayScheduleId").ToTable("ScheduleSlots").PrimaryColumn("Id").OnDelete(Rule.Cascade);
+        Create.ForeignKey("FK_Schedules_WednesdayScheduleId").FromTable("Schedules").ForeignColumn("WednesdayScheduleId").ToTable("ScheduleSlots").PrimaryColumn("Id").OnDelete(Rule.Cascade);
+        Create.ForeignKey("FK_Schedules_ThursdayScheduleId").FromTable("Schedules").ForeignColumn("ThursdayScheduleId").ToTable("ScheduleSlots").PrimaryColumn("Id").OnDelete(Rule.Cascade);
+        Create.ForeignKey("FK_Schedules_FridayScheduleId").FromTable("Schedules").ForeignColumn("FridayScheduleId").ToTable("ScheduleSlots").PrimaryColumn("Id").OnDelete(Rule.Cascade);
     }
 
     public override void Down()
