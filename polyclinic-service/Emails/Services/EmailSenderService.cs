@@ -49,7 +49,7 @@ public class EmailSenderService : IEmailSenderService
 
         string message = await GenerateMessageForAppointmentDetails(appointment, user);
 
-        _client.SendMailAsync(
+        await _client.SendMailAsync(
             new MailMessage(from: Constants.EMAIL_SENDER_ADDRESS,
                 to: user.Email, subject, message));
     }
@@ -68,7 +68,7 @@ public class EmailSenderService : IEmailSenderService
         if (user.Type == UserType.Patient) message += "Doctor information :\n";
         else message += "Patient information :\n";
 
-        int counterpartyId = appointment.UserAppointments.FirstOrDefault(userAppointment => userAppointment.UserId != user.Id).Id;
+        int counterpartyId = appointment.UserAppointments.FirstOrDefault(userAppointment => userAppointment.UserId != user.Id).UserId;
         User counterparty = await _userRepository.GetByIdAsync(counterpartyId);
 
         message += $"Full name : {counterparty.Name}\n";

@@ -14,7 +14,7 @@ public abstract class SchedulesApiController : ControllerBase
     [Produces("application/json")]
     public abstract Task<ActionResult<IEnumerable<Schedule>>> GetAllSchedules();
     
-    [HttpGet("schedule/{id}")]
+    [HttpGet("schedule/{doctorId}")]
     [ProducesResponseType(statusCode:200,type:typeof(Schedule))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
@@ -31,7 +31,7 @@ public abstract class SchedulesApiController : ControllerBase
     [Produces("application/json")]
     public abstract Task<ActionResult<Schedule>> UpdateSchedule([FromBody]UpdateScheduleRequest scheduleRequest);
     
-    [HttpDelete("delete/{id}")]
+    [HttpDelete("delete/{doctorId}")]
     [ProducesResponseType(statusCode:202,type:typeof(String))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]

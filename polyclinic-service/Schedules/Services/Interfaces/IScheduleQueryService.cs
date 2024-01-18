@@ -6,4 +6,6 @@ public interface IScheduleQueryService
 {
     Task<IEnumerable<Schedule>> GetAllSchedules();
     Task<Schedule> GetScheduleByDoctorId(int doctorId);
+
+    Task<bool> CheckIfAppointmentInDoctorSchedule(int doctorId, DateTime appointmentStartDate, DateTime appointmentEndDate);
 }

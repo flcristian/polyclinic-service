@@ -38,5 +38,40 @@ namespace polyclinic_service.Schedules.Services
 
             return result;
         }
+
+        public async Task<bool> CheckIfAppointmentInDoctorSchedule(int doctorId, DateTime appointmentStartDate, DateTime appointmentEndDate)
+        {
+            Schedule schedule = await _repository.GetByDoctorIdAsync(doctorId);
+            
+            if (schedule == null)
+            {
+                throw new ItemDoesNotExist(Constants.SCHEDULE_DOES_NOT_EXIST);
+            }
+
+            ScheduleSlot scheduleSlot = ChooseScheduleSlotDayFromDate(schedule, appointmentStartDate);
+            
+            return appointmentStartDate >= scheduleSlot.StartDate && appointmentEndDate <= scheduleSlot.EndDate;
+        }
+
+        private ScheduleSlot ChooseScheduleSlotDayFromDate(Schedule schedule, DateTime date)
+        {
+            DayOfWeek dayOfWeek = date.DayOfWeek;
+
+            switch (dayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                    return schedule.MondaySchedule;
+                case DayOfWeek.Tuesday:
+                    return schedule.TuesdaySchedule;
+                case DayOfWeek.Wednesday:
+                    return schedule.WednesdaySchedule;
+                case DayOfWeek.Thursday:
+                    return schedule.ThursdaySchedule;
+                case DayOfWeek.Friday:
+                    return schedule.FridaySchedule;
+            }
+
+            return null!;
+        }
     }
 }
