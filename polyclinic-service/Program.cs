@@ -28,6 +28,14 @@ builder.Services.AddSwaggerGen();
 
 #region BASE
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("polyclinic-service-client", domain => domain.WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+    );
+}); 
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("Default")!,
         new MySqlServerVersion(new Version(8, 0, 21))));
@@ -90,4 +98,5 @@ using (var scope = app.Services.CreateScope())
     runner.MigrateUp();
 }
 
+app.UseCors("polyclinic-service-client");
 app.Run();
