@@ -30,6 +30,7 @@ public class AppointmentRepository : IAppointmentRepository
     {
         return (await _context.Appointments
             .Include(appointment => appointment.UserAppointments)
+            .ThenInclude(ua => ua.User)
             .FirstOrDefaultAsync(appointment => appointment.Id == id))!;
     }
 

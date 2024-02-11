@@ -58,6 +58,7 @@ public class AppointmentsController : AppointmentsApiController
         try
         {
             Appointment appointment = await _queryService.GetAppointmentById(id);
+            _logger.LogInformation(appointment.UserAppointments[0].User.Id.ToString());
             
             GetAppointmentRequest result = new GetAppointmentRequest
             {
