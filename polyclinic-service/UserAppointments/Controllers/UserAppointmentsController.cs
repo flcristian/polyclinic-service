@@ -6,6 +6,7 @@ using polyclinic_service.UserAppointments.Controllers.Interfaces;
 using polyclinic_service.UserAppointments.DTOs;
 using polyclinic_service.UserAppointments.Models;
 using polyclinic_service.UserAppointments.Services.Interfaces;
+using polyclinic_service.Users.Services.Interfaces;
 
 namespace polyclinic_service.UserAppointments.Controllers;
 
@@ -24,12 +25,24 @@ public class UserAppointmentsController : UserAppointmentsApiController
         _logger = logger;
     }
 
-    public override async Task<ActionResult<IEnumerable<UserAppointment>>> GetAllUserAppointments()
+    public override async Task<ActionResult<IEnumerable<GetUserAppointmentRequest>>> GetAllUserAppointments()
     {
         _logger.LogInformation("Rest request: Get all user appointments.");
         try
         {
-            IEnumerable<UserAppointment> result = await _queryService.GetAllUserAppointments();
+            List<UserAppointment> userAppointments = (await _queryService.GetAllUserAppointments()).ToList();
+            List<GetUserAppointmentRequest> result = new List<GetUserAppointmentRequest>();
+            
+            userAppointments.ForEach(userAppointment =>
+            {
+                _logger.LogInformation(userAppointment.Id.ToString());
+                result.Add(new GetUserAppointmentRequest
+                {
+                    Id = userAppointment.Id,
+                    User = userAppointment.User,
+                    Appointment = userAppointment.Appointment
+                });
+            });
 
             return Ok(result);
         }
@@ -40,12 +53,19 @@ public class UserAppointmentsController : UserAppointmentsApiController
         }
     }
 
-    public override async Task<ActionResult<UserAppointment>> GetUserAppointmentById(int id)
+    public override async Task<ActionResult<GetUserAppointmentRequest>> GetUserAppointmentById(int id)
     {
         _logger.LogInformation($"Rest request: Get user appointment with id {id}.");
         try
         {
-            UserAppointment result = await _queryService.GetUserAppointmentById(id);
+            UserAppointment userAppointment = await _queryService.GetUserAppointmentById(id);
+
+            GetUserAppointmentRequest result = new GetUserAppointmentRequest
+            {
+                Id = userAppointment.Id,
+                User = userAppointment.User,
+                Appointment = userAppointment.Appointment
+            };
 
             return Ok(result);
         }
@@ -56,20 +76,34 @@ public class UserAppointmentsController : UserAppointmentsApiController
         }
     }
     
-    public override async Task<ActionResult<UserAppointment>> CreateUserAppointment(CreateUserAppointmentRequest userAppointmentRequest)
+    public override async Task<ActionResult<GetUserAppointmentRequest>> CreateUserAppointment(CreateUserAppointmentRequest userAppointmentRequest)
     {
         _logger.LogInformation($"Rest request: Create userAppointment with DTO:\n{userAppointmentRequest}");
-        UserAppointment response = await _commandService.CreateUserAppointment(userAppointmentRequest);
+        UserAppointment userAppointment = await _commandService.CreateUserAppointment(userAppointmentRequest);
+        
+        GetUserAppointmentRequest response = new GetUserAppointmentRequest
+        {
+            Id = userAppointment.Id,
+            User = userAppointment.User,
+            Appointment = userAppointment.Appointment
+        };
 
         return Created(Constants.USER_APPOINTMENT_CREATED, response);
     }
 
-    public override async Task<ActionResult<UserAppointment>> UpdateUserAppointment(UpdateUserAppointmentRequest userAppointmentRequest)
+    public override async Task<ActionResult<GetUserAppointmentRequest>> UpdateUserAppointment(UpdateUserAppointmentRequest userAppointmentRequest)
     {
         _logger.LogInformation($"Rest request: Create userAppointment with DTO:\n{userAppointmentRequest}");
         try
         {
-            UserAppointment response = await _commandService.UpdateUserAppointment(userAppointmentRequest);
+            UserAppointment userAppointment = await _commandService.UpdateUserAppointment(userAppointmentRequest);
+            
+            GetUserAppointmentRequest response = new GetUserAppointmentRequest
+            {
+                Id = userAppointment.Id,
+                User = userAppointment.User,
+                Appointment = userAppointment.Appointment
+            };
 
             return Accepted(Constants.USER_APPOINTMENT_UPDATED, response);
         }
@@ -96,7 +130,7 @@ public class UserAppointmentsController : UserAppointmentsApiController
         }
     }
     
-    public override async Task<ActionResult<UserAppointment>> GetAppointmentsByUserId(int userId)
+    public override async Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentsByUserId(int userId)
     {
         _logger.LogInformation($"Rest request: Get user appointments of the user with id {userId}.");
         try
@@ -112,7 +146,7 @@ public class UserAppointmentsController : UserAppointmentsApiController
         }
     }
     
-    public override async Task<ActionResult<UserAppointment>> GetAppointmentHistoryOfUserByUserId(int userId)
+    public override async Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentHistoryOfUserByUserId(int userId)
     {
         _logger.LogInformation($"Rest request: Get appointment history of the user with id {userId}.");
         try

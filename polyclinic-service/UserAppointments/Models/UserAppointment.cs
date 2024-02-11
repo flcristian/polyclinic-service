@@ -20,7 +20,7 @@ public class UserAppointment
     
     [ForeignKey("AppointmentId")]
     public int AppointmentId { get; set; }
-    
+
     [JsonIgnore]
     public virtual Appointment Appointment { get; set; }
 }

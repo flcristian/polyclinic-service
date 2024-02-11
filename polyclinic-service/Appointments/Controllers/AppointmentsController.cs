@@ -5,6 +5,8 @@ using polyclinic_service.Appointments.Models;
 using polyclinic_service.Appointments.Services.Interfaces;
 using polyclinic_service.System.Constants;
 using polyclinic_service.System.Exceptions;
+using polyclinic_service.UserAppointments.DTOs;
+using polyclinic_service.UserAppointments.Models;
 
 namespace polyclinic_service.Appointments.Controllers;
 
@@ -22,12 +24,24 @@ public class AppointmentsController : AppointmentsApiController
         _logger = logger;
     }
     
-    public override async Task<ActionResult<IEnumerable<Appointment>>> GetAllAppointments()
+    public override async Task<ActionResult<IEnumerable<GetAppointmentRequest>>> GetAllAppointments()
     {
         _logger.LogInformation("Rest request: Get all appointments.");
         try
         {
-            IEnumerable<Appointment> result = await _queryService.GetAllAppointments();
+            List<Appointment> appointments = (await _queryService.GetAllAppointments()).ToList();
+            List<GetAppointmentRequest> result = new List<GetAppointmentRequest>();
+            
+            appointments.ForEach(appointment =>
+            {
+                result.Add(new GetAppointmentRequest
+                {
+                    Id = appointment.Id,
+                    StartDate = appointment.StartDate,
+                    EndDate = appointment.EndDate,
+                    UserAppointments = ConvertUserAppointmentsToDTO(appointment.UserAppointments)
+                });
+            });
             
             return Ok(result);
         }
@@ -38,12 +52,20 @@ public class AppointmentsController : AppointmentsApiController
         }
     }
 
-    public override async Task<ActionResult<Appointment>> GetAppointmentById(int id)
+    public override async Task<ActionResult<GetAppointmentRequest>> GetAppointmentById(int id)
     {
         _logger.LogInformation($"Rest request: Get appointment with id {id}.");
         try
         {
-            Appointment result = await _queryService.GetAppointmentById(id);
+            Appointment appointment = await _queryService.GetAppointmentById(id);
+            
+            GetAppointmentRequest result = new GetAppointmentRequest
+            {
+                Id = appointment.Id,
+                StartDate = appointment.StartDate,
+                EndDate = appointment.EndDate,
+                UserAppointments = ConvertUserAppointmentsToDTO(appointment.UserAppointments)
+            };
 
             return Ok(result);
         }
@@ -54,20 +76,37 @@ public class AppointmentsController : AppointmentsApiController
         }
     }
 
-    public override async Task<ActionResult<Appointment>> CreateAppointment(CreateAppointmentRequest appointmentRequest)
+    public override async Task<ActionResult<GetAppointmentRequest>> CreateAppointment(CreateAppointmentRequest appointmentRequest)
     {
         _logger.LogInformation($"Rest request: Create appointment with DTO:\n{appointmentRequest}");
-        Appointment response = await _commandService.CreateAppointment(appointmentRequest);
+        
+        Appointment appointment = await _commandService.CreateAppointment(appointmentRequest);
+        
+        GetAppointmentRequest response = new GetAppointmentRequest
+        {
+            Id = appointment.Id,
+            StartDate = appointment.StartDate,
+            EndDate = appointment.EndDate,
+            UserAppointments = ConvertUserAppointmentsToDTO(appointment.UserAppointments)
+        };
 
         return Created(Constants.APPOINTMENT_CREATED, response);
     }
 
-    public override async Task<ActionResult<Appointment>> UpdateAppointment(UpdateAppointmentRequest appointmentRequest)
+    public override async Task<ActionResult<GetAppointmentRequest>> UpdateAppointment(UpdateAppointmentRequest appointmentRequest)
     {
         _logger.LogInformation($"Rest request: Create appointment with DTO:\n{appointmentRequest}");
         try
         {
-            Appointment response = await _commandService.UpdateAppointment(appointmentRequest);
+            Appointment appointment = await _commandService.UpdateAppointment(appointmentRequest);
+
+            GetAppointmentRequest response = new GetAppointmentRequest
+            {
+                Id = appointment.Id,
+                StartDate = appointment.StartDate,
+                EndDate = appointment.EndDate,
+                UserAppointments = ConvertUserAppointmentsToDTO(appointment.UserAppointments)
+            };
 
             return Accepted(Constants.APPOINTMENT_UPDATED, response);
         }
@@ -202,5 +241,24 @@ public class AppointmentsController : AppointmentsApiController
         {
             return NotFound(ex.Message);
         }
+    }
+    
+    // Private methods
+
+    private List<GetUserAppointmentRequest> ConvertUserAppointmentsToDTO(List<UserAppointment> userAppointments)
+    {
+        List<GetUserAppointmentRequest> result = new List<GetUserAppointmentRequest>();
+        
+        userAppointments.ForEach(ua =>
+        {
+            result.Add(new GetUserAppointmentRequest
+            {
+                Id = ua.Id,
+                User = ua.User,
+                Appointment = null
+            });
+        });
+
+        return result;
     }
 }
