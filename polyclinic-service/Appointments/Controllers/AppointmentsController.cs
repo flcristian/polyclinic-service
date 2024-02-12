@@ -7,20 +7,23 @@ using polyclinic_service.System.Constants;
 using polyclinic_service.System.Exceptions;
 using polyclinic_service.UserAppointments.DTOs;
 using polyclinic_service.UserAppointments.Models;
+using polyclinic_service.UserAppointments.Services.Interfaces;
 
 namespace polyclinic_service.Appointments.Controllers;
 
 public class AppointmentsController : AppointmentsApiController
 { 
-    private IAppointmentQueryService _queryService;
-    private IAppointmentCommandService _commandService;
+    private IAppointmentQueryService _appointmentQueryService;
+    private IAppointmentCommandService _appointmentCommandService;
+    private IUserAppointmentCommandService _userAppointmentCommandService;
 
     private ILogger<AppointmentsController> _logger;
     
-    public AppointmentsController(IAppointmentQueryService queryService, IAppointmentCommandService commandService, ILogger<AppointmentsController> logger)
+    public AppointmentsController(IAppointmentQueryService appointmentQueryService, IAppointmentCommandService appointmentCommandService, IUserAppointmentCommandService userAppointmentCommandService, ILogger<AppointmentsController> logger)
     {
-        _queryService = queryService;
-        _commandService = commandService;
+        _appointmentQueryService = appointmentQueryService;
+        _appointmentCommandService = appointmentCommandService;
+        _userAppointmentCommandService = userAppointmentCommandService;
         _logger = logger;
     }
     
@@ -29,7 +32,7 @@ public class AppointmentsController : AppointmentsApiController
         _logger.LogInformation("Rest request: Get all appointments.");
         try
         {
-            List<Appointment> appointments = (await _queryService.GetAllAppointments()).ToList();
+            List<Appointment> appointments = (await _appointmentQueryService.GetAllAppointments()).ToList();
             List<GetAppointmentRequest> result = new List<GetAppointmentRequest>();
             
             appointments.ForEach(appointment =>
@@ -57,8 +60,7 @@ public class AppointmentsController : AppointmentsApiController
         _logger.LogInformation($"Rest request: Get appointment with id {id}.");
         try
         {
-            Appointment appointment = await _queryService.GetAppointmentById(id);
-            _logger.LogInformation(appointment.UserAppointments[0].User.Id.ToString());
+            Appointment appointment = await _appointmentQueryService.GetAppointmentById(id);
             
             GetAppointmentRequest result = new GetAppointmentRequest
             {
@@ -81,14 +83,32 @@ public class AppointmentsController : AppointmentsApiController
     {
         _logger.LogInformation($"Rest request: Create appointment with DTO:\n{appointmentRequest}");
         
-        Appointment appointment = await _commandService.CreateAppointment(appointmentRequest);
+        Appointment appointment = await _appointmentCommandService.CreateAppointment(appointmentRequest);
+
+        List<CreateUserAppointmentRequest> userRequests = new List<CreateUserAppointmentRequest>
+        {
+            new()
+            {
+                UserId = appointmentRequest.PatientId,
+                AppointmentId = appointment.Id
+            },
+            new()
+            {
+                UserId = appointmentRequest.DoctorId,
+                AppointmentId = appointment.Id
+            }
+        };
+
+        List<UserAppointment> userAppointments = new List<UserAppointment>();
+        userAppointments.Add(await _userAppointmentCommandService.CreateUserAppointment(userRequests[0]));
+        userAppointments.Add(await _userAppointmentCommandService.CreateUserAppointment(userRequests[1]));
         
         GetAppointmentRequest response = new GetAppointmentRequest
         {
             Id = appointment.Id,
             StartDate = appointment.StartDate,
             EndDate = appointment.EndDate,
-            UserAppointments = ConvertUserAppointmentsToDTO(appointment.UserAppointments)
+            UserAppointments = ConvertUserAppointmentsToDTO(userAppointments)
         };
 
         return Created(Constants.APPOINTMENT_CREATED, response);
@@ -99,7 +119,7 @@ public class AppointmentsController : AppointmentsApiController
         _logger.LogInformation($"Rest request: Create appointment with DTO:\n{appointmentRequest}");
         try
         {
-            Appointment appointment = await _commandService.UpdateAppointment(appointmentRequest);
+            Appointment appointment = await _appointmentCommandService.UpdateAppointment(appointmentRequest);
 
             GetAppointmentRequest response = new GetAppointmentRequest
             {
@@ -123,7 +143,7 @@ public class AppointmentsController : AppointmentsApiController
         _logger.LogInformation($"Rest request: Delete appointment with id {id}");
         try
         {
-            await _commandService.DeleteAppointment(id);
+            await _appointmentCommandService.DeleteAppointment(id);
 
             return Accepted(Constants.APPOINTMENT_DELETED, Constants.APPOINTMENT_DELETED);
         }
@@ -143,7 +163,7 @@ public class AppointmentsController : AppointmentsApiController
         try
         {
             IEnumerable<FreeTimeSlotResponse> response =
-                await _queryService.GetFreeSlotsForInterval(userId, startDay, endDay);
+                await _appointmentQueryService.GetFreeSlotsForInterval(userId, startDay, endDay);
             return Ok(response);
         }
         catch (ItemsDoNotExist ex)
@@ -162,7 +182,7 @@ public class AppointmentsController : AppointmentsApiController
         try
         {
             IEnumerable<FreeTimeSlotResponse> response =
-                await _queryService.GetFreeSlotsForInterval(userId, startWeek, endWeek);
+                await _appointmentQueryService.GetFreeSlotsForInterval(userId, startWeek, endWeek);
             return Ok(response);
         }
         catch (ItemsDoNotExist ex)
@@ -180,7 +200,7 @@ public class AppointmentsController : AppointmentsApiController
         try
         {
             IEnumerable<FreeTimeSlotResponse> response =
-                await _queryService.GetFreeSlotsForInterval(userId, startMonth, endMonth);
+                await _appointmentQueryService.GetFreeSlotsForInterval(userId, startMonth, endMonth);
             return Ok(response);
         }
         catch (ItemsDoNotExist ex)
@@ -197,7 +217,7 @@ public class AppointmentsController : AppointmentsApiController
         try
         {
             IEnumerable<FreeTimeSlotResponse> response =
-                await _queryService.GetFreeSlotsForInterval(userId, startDate, endDate);
+                await _appointmentQueryService.GetFreeSlotsForInterval(userId, startDate, endDate);
 
             return Ok(response);
         }
@@ -215,7 +235,7 @@ public class AppointmentsController : AppointmentsApiController
         try
         {
             DateResponse response =
-                await _queryService.DayWithMostAppointmentsInInterval(startMonth, endMonth);
+                await _appointmentQueryService.DayWithMostAppointmentsInInterval(startMonth, endMonth);
 
             return Ok(response);
         }
@@ -234,7 +254,7 @@ public class AppointmentsController : AppointmentsApiController
         try
         {
             DateResponse response =
-                await _queryService.DayWithMostAppointmentsInInterval(startWeek, endWeek);
+                await _appointmentQueryService.DayWithMostAppointmentsInInterval(startWeek, endWeek);
 
             return Ok(response);
         }

@@ -9,6 +9,12 @@ public class CreateAppointmentRequest
 
     [Required] 
     public DateTime EndDate { get; set; }
+    
+    [Required]
+    public int PatientId { get; set; }
+    
+    [Required]
+    public int DoctorId { get; set; }
 
     public override string ToString()
     {
