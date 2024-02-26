@@ -6,7 +6,7 @@ namespace polyclinic_service.Data.Migrations;
 
 [Migration(203012024)]
 public class CreateScheduleTables : Migration
-{ 
+{
     public override void Up()
     {
         CreateTables();

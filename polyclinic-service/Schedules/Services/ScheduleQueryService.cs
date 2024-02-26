@@ -49,8 +49,11 @@ namespace polyclinic_service.Schedules.Services
             }
 
             ScheduleSlot scheduleSlot = ChooseScheduleSlotDayFromDate(schedule, appointmentStartDate);
+
+            TimeSpan appointmentStartTime = new TimeSpan(0, appointmentStartDate.Hour, appointmentStartDate.Minute);
+            TimeSpan appointmentEndTime = new TimeSpan(0, appointmentEndDate.Hour, appointmentEndDate.Minute);
             
-            return appointmentStartDate >= scheduleSlot.StartDate && appointmentEndDate <= scheduleSlot.EndDate;
+            return appointmentStartTime >= scheduleSlot.StartTime && appointmentEndTime <= scheduleSlot.EndTime;
         }
 
         private ScheduleSlot ChooseScheduleSlotDayFromDate(Schedule schedule, DateTime date)

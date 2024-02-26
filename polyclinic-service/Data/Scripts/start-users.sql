@@ -1,4 +1,4 @@
-insert into Users (Id, Name, Email, Password, Gender, Age, Phone, Type) values (1, 'Terri Done', 'tdone0@telegraph.co.uk', 'ulxFDF08', 'Male', 60, '+48 154 912 6770', 1);
+    insert into Users (Id, Name, Email, Password, Gender, Age, Phone, Type) values (1, 'Terri Done', 'tdone0@telegraph.co.uk', 'ulxFDF08', 'Male', 60, '+48 154 912 6770', 1);
 insert into Users (Id, Name, Email, Password, Gender, Age, Phone, Type) values (2, 'Odey Churcher', 'ochurcher1@tiny.cc', 'rceOHO93', 'Male', 1, '+62 420 453 9648', 1);
 insert into Users (Id, Name, Email, Password, Gender, Age, Phone, Type) values (3, 'Zak Stears', 'zstears2@deliciousdays.com', 'wduBCC28', 'Male', 90, '+505 856 317 0629', 2);
 insert into Users (Id, Name, Email, Password, Gender, Age, Phone, Type) values (4, 'Denys Jimmes', 'djimmes3@homestead.com', 'cicSTO64', 'Female', 9, '+420 640 837 5763', 1);

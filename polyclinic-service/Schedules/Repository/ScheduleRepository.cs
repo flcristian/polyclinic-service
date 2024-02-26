@@ -85,8 +85,8 @@ namespace polyclinic_service.Schedules.Repository
         {
             ScheduleSlot scheduleSlot = await _context.ScheduleSlots.FindAsync(scheduleSlotId);
             
-            scheduleSlot.StartDate = scheduleSlotRequest.StartDate;
-            scheduleSlot.EndDate = scheduleSlotRequest.EndDate;
+            scheduleSlot.StartTime = scheduleSlotRequest.StartTime;
+            scheduleSlot.EndTime = scheduleSlotRequest.EndTime;
 
             _context.ScheduleSlots.Update(scheduleSlot);
             await _context.SaveChangesAsync();
