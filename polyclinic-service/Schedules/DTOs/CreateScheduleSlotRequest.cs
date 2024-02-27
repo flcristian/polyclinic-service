@@ -1,7 +1,9 @@
-﻿namespace polyclinic_service.Schedules.DTOs;
+﻿using polyclinic_service.Schedules.Models;
+
+namespace polyclinic_service.Schedules.DTOs;
 
 public class CreateScheduleSlotRequest
 {
-    public TimeSpan StartTime { get; set; }
-    public TimeSpan EndTime { get; set; }
+    public Time StartTime { get; set; }
+    public Time EndTime { get; set; }
 }

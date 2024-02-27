@@ -83,10 +83,10 @@ namespace polyclinic_service.Schedules.Repository
 
         private async Task<ScheduleSlot> UpdateScheduleSlotAsync(int scheduleSlotId, UpdateScheduleSlotRequest scheduleSlotRequest)
         {
-            ScheduleSlot scheduleSlot = await _context.ScheduleSlots.FindAsync(scheduleSlotId);
+            ScheduleSlot scheduleSlot = (await _context.ScheduleSlots.FindAsync(scheduleSlotId))!;
             
-            scheduleSlot.StartTime = scheduleSlotRequest.StartTime;
-            scheduleSlot.EndTime = scheduleSlotRequest.EndTime;
+            scheduleSlot.StartTime = _mapper.Map<TimeSpan>(scheduleSlotRequest.StartTime);
+            scheduleSlot.EndTime = _mapper.Map<TimeSpan>(scheduleSlotRequest.EndTime);
 
             _context.ScheduleSlots.Update(scheduleSlot);
             await _context.SaveChangesAsync();
@@ -105,6 +105,16 @@ namespace polyclinic_service.Schedules.Repository
             
             _context.Schedules.Remove(schedule);
             await _context.SaveChangesAsync();
+        }
+
+        public String ConvertTimeSpanToString(TimeSpan time)
+        {
+            return time.ToString(@"hh\.mm\.ss");
+        }
+
+        public TimeSpan ConvertStringToTimeSpan(String time)
+        {
+            return TimeSpan.Parse(time);
         }
     }
 }

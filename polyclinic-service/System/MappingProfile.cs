@@ -22,5 +22,8 @@ public class MappingProfile:Profile
         CreateMap<UpdateScheduleSlotRequest, ScheduleSlot>(); 
         CreateMap<CreateUserAppointmentRequest, UserAppointment>();
         CreateMap<UpdateUserAppointmentRequest, UserAppointment>(); 
+        CreateMap<Time, TimeSpan>().ConvertUsing(time => new TimeSpan(
+                time.Hours, time.Minutes, 0
+            ));
     }
 }
