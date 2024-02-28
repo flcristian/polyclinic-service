@@ -12,8 +12,8 @@ public class ScheduleSlot
     public int Id { get; set; }
     
     [Required]
-    public TimeSpan StartTime { get; set; }
+    public String StartTime { get; set; }
     
     [Required]
-    public TimeSpan EndTime { get; set; }
+    public String EndTime { get; set; }
 }

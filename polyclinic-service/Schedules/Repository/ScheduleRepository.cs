@@ -107,14 +107,20 @@ namespace polyclinic_service.Schedules.Repository
             await _context.SaveChangesAsync();
         }
 
-        public String ConvertTimeSpanToString(TimeSpan time)
+        public String ConvertTimeToString(Time time)
         {
-            return time.ToString(@"hh\.mm\.ss");
+            return time.Hours + ":" + time.Minutes;
         }
 
-        public TimeSpan ConvertStringToTimeSpan(String time)
+        public TimeSpan ConvertStringToTime(String time)
         {
-            return TimeSpan.Parse(time);
+            string[] values = time.Split(':');
+
+            return new Time
+            {
+                Hours = Int32.Parse(values[0]),
+                Minutes = Int32.Parse(values[1])
+            };
         }
     }
 }
