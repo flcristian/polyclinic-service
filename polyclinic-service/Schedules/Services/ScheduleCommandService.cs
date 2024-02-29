@@ -25,7 +25,12 @@ namespace polyclinic_service.Schedules.Services
 
         public async Task<Schedule> UpdateSchedule(UpdateScheduleRequest scheduleRequest)
         {
-            Schedule schedule = await _repository.GetByDoctorIdAsync(scheduleRequest.DoctorId);
+            Schedule schedule = await _repository.GetByDoctorIdAndWeekIdentityAsync(new GetByDoctorIdAndWeekIdentityRequest
+            {
+                DoctorId = scheduleRequest.DoctorId,
+                Year = scheduleRequest.Year,
+                WeekNumber = scheduleRequest.WeekNumber
+            });
 
             if (schedule == null)
             {
@@ -37,16 +42,21 @@ namespace polyclinic_service.Schedules.Services
             return schedule;
         }
 
-        public async Task DeleteSchedule(int doctorId)
+        public async Task DeleteSchedule(DeleteScheduleRequest scheduleRequest)
         {
-            Schedule schedule = await _repository.GetByDoctorIdAsync(doctorId);
+            Schedule schedule = await _repository.GetByDoctorIdAndWeekIdentityAsync(new GetByDoctorIdAndWeekIdentityRequest
+            {
+                DoctorId = scheduleRequest.DoctorId,
+                Year = scheduleRequest.Year,
+                WeekNumber = scheduleRequest.WeekNumber
+            });
 
             if (schedule == null)
             {
                 throw new ItemDoesNotExist(Constants.SCHEDULE_DOES_NOT_EXIST);
             }
 
-            await _repository.DeleteAsync(doctorId);
+            await _repository.DeleteAsync(scheduleRequest);
         }
     }
 }

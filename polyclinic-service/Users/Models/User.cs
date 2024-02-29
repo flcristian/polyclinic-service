@@ -34,5 +34,5 @@ public class User
     
     public virtual List<UserAppointment> UserAppointments { get; set; }
     
-    public virtual Schedule WorkSchedule { get; set; }
+    public virtual List<Schedule> Schedules { get; set; }
 }

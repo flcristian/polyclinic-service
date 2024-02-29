@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections;
+using Microsoft.AspNetCore.Mvc;
 using polyclinic_service.System.Constants;
 using polyclinic_service.System.Exceptions;
 using polyclinic_service.Schedules.Controllers.Interfaces;
@@ -22,12 +23,12 @@ public class SchedulesController : SchedulesApiController
         _logger = logger;
     }
     
-    public override async Task<ActionResult<IEnumerable<Schedule>>> GetAllSchedules()
+    public override async Task<ActionResult<IEnumerable<GetScheduleRequest>>> GetAllSchedules()
     {
         _logger.LogInformation("Rest request: Get all schedules.");
         try
         {
-            IEnumerable<Schedule> result = await _queryService.GetAllSchedules();
+            IEnumerable<GetScheduleRequest> result = await _queryService.GetAllSchedules();
             
             return Ok(result);
         }
@@ -38,12 +39,12 @@ public class SchedulesController : SchedulesApiController
         }
     }
 
-    public override async Task<ActionResult<Schedule>> GetScheduleByDoctorId(int doctorId)
+    public override async Task<ActionResult<IEnumerable<GetScheduleRequest>>> GetSchedulesByDoctorId(int doctorId)
     {
-        _logger.LogInformation($"Rest request: Get schedule with doctor id {doctorId}.");
+        _logger.LogInformation($"Rest request: Get schedules with doctor id {doctorId}.");
         try
         {
-            Schedule result = await _queryService.GetScheduleByDoctorId(doctorId);
+            IEnumerable<GetScheduleRequest> result = await _queryService.GetSchedulesByDoctorId(doctorId);
 
             return Ok(result);
         }
@@ -54,6 +55,27 @@ public class SchedulesController : SchedulesApiController
         }
     }
 
+    public override async Task<ActionResult<GetScheduleRequest>> GetScheduleByDoctorIdAndWeekIdentity(int doctorId, int year, int weekNumber)
+    {
+        _logger.LogInformation($"Rest request: Get schedule with doctor id and week identity {doctorId} - {year} : Week {weekNumber}.");
+        try
+        {
+            GetScheduleRequest result = await _queryService.GetScheduleByDoctorIdAndWeekIdentity(new GetByDoctorIdAndWeekIdentityRequest
+            {
+                DoctorId = doctorId,
+                Year = year,
+                WeekNumber = weekNumber
+            });
+
+            return Ok(result);
+        }
+        catch (ItemDoesNotExist ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return NotFound(ex.Message);
+        }
+    }
+    
     public override async Task<ActionResult<Schedule>> CreateSchedule(CreateScheduleRequest scheduleRequest)
     {
         _logger.LogInformation($"Rest request: Create schedule with DTO:\n{scheduleRequest}");
@@ -78,12 +100,12 @@ public class SchedulesController : SchedulesApiController
         }
     }
 
-    public override async Task<ActionResult> DeleteSchedule(int doctorId)
+    public override async Task<ActionResult> DeleteSchedule(DeleteScheduleRequest scheduleRequest)
     {
-        _logger.LogInformation($"Rest request: Delete schedule with doctor id {doctorId}");
+        _logger.LogInformation($"Rest request: Delete schedule by DTO {scheduleRequest}");
         try
         {
-            await _commandService.DeleteSchedule(doctorId);
+            await _commandService.DeleteSchedule(scheduleRequest);
 
             return Accepted(Constants.SCHEDULE_DELETED, Constants.SCHEDULE_DELETED);
         }

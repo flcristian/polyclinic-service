@@ -68,8 +68,8 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Schedule>()
             .HasOne(schedule => schedule.Doctor)
-            .WithOne(user => user.WorkSchedule)
-            .HasForeignKey<Schedule>(schedule => schedule.DoctorId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .WithMany(user => user.Schedules)
+            .HasForeignKey(schedule => schedule.DoctorId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

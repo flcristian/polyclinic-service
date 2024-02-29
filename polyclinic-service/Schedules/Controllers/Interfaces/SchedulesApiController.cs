@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections;
+using Microsoft.AspNetCore.Mvc;
 using polyclinic_service.Schedules.DTOs;
 using polyclinic_service.Schedules.Models;
 
@@ -9,16 +10,22 @@ namespace polyclinic_service.Schedules.Controllers.Interfaces;
 public abstract class SchedulesApiController : ControllerBase
 {
     [HttpGet("all")]
-    [ProducesResponseType(statusCode:200,type:typeof(IEnumerable<Schedule>))]
+    [ProducesResponseType(statusCode:200,type:typeof(IEnumerable<GetScheduleRequest>))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult<IEnumerable<Schedule>>> GetAllSchedules();
+    public abstract Task<ActionResult<IEnumerable<GetScheduleRequest>>> GetAllSchedules();
     
-    [HttpGet("schedule/{doctorId}")]
-    [ProducesResponseType(statusCode:200,type:typeof(Schedule))]
+    [HttpGet("schedules/{doctorId}")]
+    [ProducesResponseType(statusCode:200,type:typeof(IEnumerable<GetScheduleRequest>))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult<Schedule>> GetScheduleByDoctorId([FromRoute]int doctorId);
+    public abstract Task<ActionResult<IEnumerable<GetScheduleRequest>>> GetSchedulesByDoctorId([FromRoute]int doctorId);
+
+    [HttpGet("schedule/{doctorId}")]
+    [ProducesResponseType(statusCode: 200, type: typeof(GetScheduleRequest))]
+    [ProducesResponseType(statusCode: 404, type: typeof(String))]
+    [Produces("application/json")]
+    public abstract Task<ActionResult<GetScheduleRequest>> GetScheduleByDoctorIdAndWeekIdentity([FromRoute]int doctorId, [FromQuery]int year, [FromQuery]int weekNumber);
     
     [HttpPost("create")]
     [ProducesResponseType(statusCode:201,type:typeof(Schedule))]
@@ -31,9 +38,9 @@ public abstract class SchedulesApiController : ControllerBase
     [Produces("application/json")]
     public abstract Task<ActionResult<Schedule>> UpdateSchedule([FromBody]UpdateScheduleRequest scheduleRequest);
     
-    [HttpDelete("delete/{doctorId}")]
+    [HttpDelete("delete")]
     [ProducesResponseType(statusCode:202,type:typeof(String))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult> DeleteSchedule([FromRoute]int doctorId);
+    public abstract Task<ActionResult> DeleteSchedule(DeleteScheduleRequest scheduleRequest);
 }

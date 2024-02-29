@@ -59,7 +59,7 @@ public class EmailSenderService : IEmailSenderService
         string message = "";
         message += $"Appointment with id {appointment.Id}\n";
         message += "==--==--==--==\n";
-        message += $"Appointment date : {appointment.StartDate.Date.ToString(Constants.STANDARD_DATE_CALENDAR_DATE_ONLY)}\n";
+        message += $"Appointment date : {appointment.StartDate.Date.ToString(Constants.STANDARD_DATE_FORMAT)}\n";
 
         TimeSpan duration = appointment.EndDate - appointment.StartDate;
         message += $"Appointment duration : {duration.Hours.ToString("D2")}:{duration.Minutes.ToString("D2")}\n";
@@ -68,7 +68,7 @@ public class EmailSenderService : IEmailSenderService
         if (user.Type == UserType.Patient) message += "Doctor information :\n";
         else message += "Patient information :\n";
 
-        int counterpartyId = appointment.UserAppointments.FirstOrDefault(userAppointment => userAppointment.UserId != user.Id).UserId;
+        int counterpartyId = appointment.UserAppointments.FirstOrDefault(userAppointment => userAppointment.UserId != user.Id)!.UserId;
         User counterparty = await _userRepository.GetByIdAsync(counterpartyId);
 
         message += $"Full name : {counterparty.Name}\n";

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Mvc;
 using polyclinic_service.Appointments.DTOs;
 using polyclinic_service.Appointments.Models;
 using polyclinic_service.Appointments.Services.Interfaces;
@@ -7,6 +8,7 @@ using polyclinic_service.Emails.Services.Interfaces;
 using polyclinic_service.Schedules.Services.Interfaces;
 using polyclinic_service.System.Constants;
 using polyclinic_service.System.Exceptions;
+using polyclinic_service.System.Utility;
 using polyclinic_service.UserActions.Controllers.Interfaces;
 using polyclinic_service.UserActions.DTOs;
 using polyclinic_service.UserAppointments.DTOs;
@@ -50,7 +52,7 @@ public class UserActionsController : UserActionsApiController
     public override async Task<ActionResult<string>> CreateSchedule(CreateAppointmentActionRequest request)
     {
         // Obtaining the patient.
-        User patient = null!;
+        User patient;
         try
         {
             patient = await _userQueryService.GetUserById(request.PatientId);
@@ -61,7 +63,7 @@ public class UserActionsController : UserActionsApiController
         }
         
         // Obtaining the doctor.
-        User doctor = null!;
+        User doctor;
         try
         {
             doctor = await _userQueryService.GetUserById(request.DoctorId);
@@ -78,7 +80,11 @@ public class UserActionsController : UserActionsApiController
         DateTime appointmentStartDate = request.AppointmentDate;
         DateTime appointmentEndDate = appointmentStartDate + TimeSpan.FromMinutes(request.Minutes);
 
-        if (!await _scheduleQueryService.CheckIfAppointmentInDoctorSchedule(doctor.Id, appointmentStartDate,
+        if (!await _scheduleQueryService.CheckIfAppointmentInDoctorSchedule(
+                doctor.Id,
+                request.AppointmentDate.Year,
+                DatesUtility.GetWeekNumberFromDate(request.AppointmentDate),
+                appointmentStartDate,
                 appointmentEndDate))
             return Conflict(Constants.APPOINTMENT_NOT_IN_SCHEDULE);
 
@@ -88,14 +94,14 @@ public class UserActionsController : UserActionsApiController
             EndDate = appointmentEndDate
         });
 
-        UserAppointment patientAppointment = await _userAppointmentCommandService.CreateUserAppointment(
+        await _userAppointmentCommandService.CreateUserAppointment(
             new CreateUserAppointmentRequest
             {
                 AppointmentId = appointment.Id,
                 UserId = patient.Id
             });
         
-        UserAppointment doctorAppointment = await _userAppointmentCommandService.CreateUserAppointment(
+        await _userAppointmentCommandService.CreateUserAppointment(
             new CreateUserAppointmentRequest
             {
                 AppointmentId = appointment.Id,

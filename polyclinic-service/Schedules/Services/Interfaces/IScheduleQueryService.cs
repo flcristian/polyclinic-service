@@ -1,11 +1,11 @@
-﻿using polyclinic_service.Schedules.Models;
-
+﻿using polyclinic_service.Schedules.DTOs;
 namespace polyclinic_service.Schedules.Services.Interfaces;
 
 public interface IScheduleQueryService
 {
-    Task<IEnumerable<Schedule>> GetAllSchedules();
-    Task<Schedule> GetScheduleByDoctorId(int doctorId);
+    Task<IEnumerable<GetScheduleRequest>> GetAllSchedules();
+    Task<IEnumerable<GetScheduleRequest>> GetSchedulesByDoctorId(int doctorId);
+    Task<GetScheduleRequest> GetScheduleByDoctorIdAndWeekIdentity(GetByDoctorIdAndWeekIdentityRequest scheduleRequest);
 
-    Task<bool> CheckIfAppointmentInDoctorSchedule(int doctorId, DateTime appointmentStartDate, DateTime appointmentEndDate);
+    Task<bool> CheckIfAppointmentInDoctorSchedule(int doctorId, int year, int weekNumber, DateTime appointmentStartDate, DateTime appointmentEndDate);
 }

@@ -7,5 +7,5 @@ public interface IScheduleCommandService
 {
     Task<Schedule> CreateSchedule(CreateScheduleRequest ScheduleRequest);
     Task<Schedule> UpdateSchedule(UpdateScheduleRequest ScheduleRequest);
-    Task DeleteSchedule(int doctorId);
+    Task DeleteSchedule(DeleteScheduleRequest scheduleRequest);
 }

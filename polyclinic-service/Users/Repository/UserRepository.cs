@@ -24,12 +24,16 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users
             .Include(user => user.UserAppointments)
-            .Include(user => user.WorkSchedule)
-            .Include(user => user.WorkSchedule.MondaySchedule)
-            .Include(user => user.WorkSchedule.TuesdaySchedule)
-            .Include(user => user.WorkSchedule.WednesdaySchedule)
-            .Include(user => user.WorkSchedule.ThursdaySchedule)
-            .Include(user => user.WorkSchedule.FridaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.MondaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.TuesdaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.WednesdaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.ThursdaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.FridaySchedule)
             .ToListAsync();
     }
 
@@ -37,12 +41,16 @@ public class UserRepository : IUserRepository
     {
         return (await _context.Users
             .Include(user => user.UserAppointments)
-            .Include(user => user.WorkSchedule)
-            .Include(user => user.WorkSchedule.MondaySchedule)
-            .Include(user => user.WorkSchedule.TuesdaySchedule)
-            .Include(user => user.WorkSchedule.WednesdaySchedule)
-            .Include(user => user.WorkSchedule.ThursdaySchedule)
-            .Include(user => user.WorkSchedule.FridaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.MondaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.TuesdaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.WednesdaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.ThursdaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.FridaySchedule)
             .FirstOrDefaultAsync(user => user.Id == id))!;
     }
 

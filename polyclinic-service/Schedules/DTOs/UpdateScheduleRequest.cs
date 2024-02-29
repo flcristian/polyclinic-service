@@ -3,6 +3,8 @@
 public class UpdateScheduleRequest
 {
     public int DoctorId { get; set; }
+    public int Year { get; set; }
+    public int WeekNumber { get; set; }
     public UpdateScheduleSlotRequest MondaySchedule { get; set; }
     public UpdateScheduleSlotRequest TuesdaySchedule { get; set; }
     public UpdateScheduleSlotRequest WednesdaySchedule { get; set; }

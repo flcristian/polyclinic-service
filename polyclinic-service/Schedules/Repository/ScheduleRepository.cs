@@ -4,8 +4,6 @@ using polyclinic_service.Data;
 using polyclinic_service.Schedules.DTOs;
 using polyclinic_service.Schedules.Models;
 using polyclinic_service.Schedules.Repository.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace polyclinic_service.Schedules.Repository
 {
@@ -31,7 +29,7 @@ namespace polyclinic_service.Schedules.Repository
                 .ToListAsync();
         }
 
-        public async Task<Schedule> GetByDoctorIdAsync(int doctorId)
+        public async Task<IEnumerable<Schedule>> GetSchedulesByDoctorIdAsync(int doctorId)
         {
             return await _context.Schedules
                 .Include(schedule => schedule.MondaySchedule)
@@ -39,7 +37,23 @@ namespace polyclinic_service.Schedules.Repository
                 .Include(schedule => schedule.WednesdaySchedule)
                 .Include(schedule => schedule.ThursdaySchedule)
                 .Include(schedule => schedule.FridaySchedule)
-                .FirstOrDefaultAsync(schedule => schedule.DoctorId == doctorId);
+                .Where(schedule => schedule.DoctorId == doctorId)
+                .ToListAsync();
+        }
+
+        public async Task<Schedule> GetByDoctorIdAndWeekIdentityAsync(GetByDoctorIdAndWeekIdentityRequest scheduleRequest)
+        {
+            return (await _context.Schedules
+                .Include(schedule => schedule.MondaySchedule)
+                .Include(schedule => schedule.TuesdaySchedule)
+                .Include(schedule => schedule.WednesdaySchedule)
+                .Include(schedule => schedule.ThursdaySchedule)
+                .Include(schedule => schedule.FridaySchedule)
+                .FirstOrDefaultAsync(schedule => 
+                    schedule.DoctorId == scheduleRequest.DoctorId &&
+                    schedule.Year == scheduleRequest.Year &&
+                    schedule.WeekNumber == scheduleRequest.WeekNumber
+                    ))!;
         }
 
         public async Task<Schedule> CreateAsync(CreateScheduleRequest scheduleRequest)
@@ -54,6 +68,8 @@ namespace polyclinic_service.Schedules.Repository
             Schedule schedule = new Schedule
             {
                 DoctorId = scheduleRequest.DoctorId,
+                Year = scheduleRequest.Year,
+                WeekNumber = scheduleRequest.WeekNumber,
                 MondayScheduleId = monday.Id,
                 TuesdayScheduleId = tuesday.Id,
                 WednesdayScheduleId = wednesday.Id,
@@ -68,7 +84,11 @@ namespace polyclinic_service.Schedules.Repository
 
         public async Task<Schedule> UpdateAsync(UpdateScheduleRequest scheduleRequest)
         {
-            Schedule schedule = await _context.Schedules.FindAsync(scheduleRequest.DoctorId);
+            Schedule schedule = (await _context.Schedules.FirstOrDefaultAsync(schedule => 
+                schedule.DoctorId == scheduleRequest.DoctorId &&
+                schedule.Year == scheduleRequest.Year &&
+                schedule.WeekNumber == scheduleRequest.WeekNumber
+            ))!;
             
             await UpdateScheduleSlotAsync(schedule.MondayScheduleId, scheduleRequest.MondaySchedule);
             await UpdateScheduleSlotAsync(schedule.TuesdayScheduleId, scheduleRequest.TuesdaySchedule);
@@ -85,42 +105,30 @@ namespace polyclinic_service.Schedules.Repository
         {
             ScheduleSlot scheduleSlot = (await _context.ScheduleSlots.FindAsync(scheduleSlotId))!;
             
-            scheduleSlot.StartTime = _mapper.Map<TimeSpan>(scheduleSlotRequest.StartTime);
-            scheduleSlot.EndTime = _mapper.Map<TimeSpan>(scheduleSlotRequest.EndTime);
+            scheduleSlot.StartTime = _mapper.Map<String>(scheduleSlotRequest.StartTime);
+            scheduleSlot.EndTime = _mapper.Map<String>(scheduleSlotRequest.EndTime);
 
             _context.ScheduleSlots.Update(scheduleSlot);
             await _context.SaveChangesAsync();
             return scheduleSlot;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(DeleteScheduleRequest scheduleRequest)
         {
-            Schedule schedule = await _context.Schedules.FindAsync(id);
+            Schedule schedule = (await _context.Schedules.FirstOrDefaultAsync(schedule => 
+                schedule.DoctorId == scheduleRequest.DoctorId &&
+                schedule.Year == scheduleRequest.Year &&
+                schedule.WeekNumber == scheduleRequest.WeekNumber
+                ))!;
             
-            _context.ScheduleSlots.Remove(await _context.ScheduleSlots.FindAsync(schedule.MondayScheduleId));
-            _context.ScheduleSlots.Remove(await _context.ScheduleSlots.FindAsync(schedule.TuesdayScheduleId));
-            _context.ScheduleSlots.Remove(await _context.ScheduleSlots.FindAsync(schedule.WednesdayScheduleId));
-            _context.ScheduleSlots.Remove(await _context.ScheduleSlots.FindAsync(schedule.ThursdayScheduleId));
-            _context.ScheduleSlots.Remove(await _context.ScheduleSlots.FindAsync(schedule.FridayScheduleId));
+            _context.ScheduleSlots.Remove((await _context.ScheduleSlots.FindAsync(schedule.MondayScheduleId))!);
+            _context.ScheduleSlots.Remove((await _context.ScheduleSlots.FindAsync(schedule.TuesdayScheduleId))!);
+            _context.ScheduleSlots.Remove((await _context.ScheduleSlots.FindAsync(schedule.WednesdayScheduleId))!);
+            _context.ScheduleSlots.Remove((await _context.ScheduleSlots.FindAsync(schedule.ThursdayScheduleId))!);
+            _context.ScheduleSlots.Remove((await _context.ScheduleSlots.FindAsync(schedule.FridayScheduleId))!);
             
             _context.Schedules.Remove(schedule);
             await _context.SaveChangesAsync();
-        }
-
-        public String ConvertTimeToString(Time time)
-        {
-            return time.Hours + ":" + time.Minutes;
-        }
-
-        public TimeSpan ConvertStringToTime(String time)
-        {
-            string[] values = time.Split(':');
-
-            return new Time
-            {
-                Hours = Int32.Parse(values[0]),
-                Minutes = Int32.Parse(values[1])
-            };
         }
     }
 }

@@ -11,6 +11,12 @@ public class Schedule
     public int DoctorId { get; set; }
     
     [Required]
+    public int Year { get; set; }
+
+    [Required]
+    public int WeekNumber { get; set; }
+    
+    [Required]
     [JsonIgnore]
     public int MondayScheduleId { get; set; }
     

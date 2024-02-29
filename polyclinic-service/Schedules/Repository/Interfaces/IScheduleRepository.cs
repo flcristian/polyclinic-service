@@ -6,8 +6,9 @@ namespace polyclinic_service.Schedules.Repository.Interfaces;
 public interface IScheduleRepository
 {
     Task<IEnumerable<Schedule>> GetAllAsync();
-    Task<Schedule> GetByDoctorIdAsync(int doctorId);
+    Task<IEnumerable<Schedule>> GetSchedulesByDoctorIdAsync(int doctorId);
+    Task<Schedule> GetByDoctorIdAndWeekIdentityAsync(GetByDoctorIdAndWeekIdentityRequest scheduleRequest);
     Task<Schedule> CreateAsync(CreateScheduleRequest ScheduleRequest);
     Task<Schedule> UpdateAsync(UpdateScheduleRequest ScheduleRequest);
-    Task DeleteAsync(int id);
+    Task DeleteAsync(DeleteScheduleRequest scheduleRequest);
 }
