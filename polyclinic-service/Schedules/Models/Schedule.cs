@@ -8,6 +8,10 @@ namespace polyclinic_service.Schedules.Models;
 public class Schedule
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+    
+    [Required]
     public int DoctorId { get; set; }
     
     [Required]

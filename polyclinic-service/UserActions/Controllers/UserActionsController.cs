@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using polyclinic_service.Appointments.DTOs;
 using polyclinic_service.Appointments.Models;
 using polyclinic_service.Appointments.Services.Interfaces;
@@ -12,7 +11,7 @@ using polyclinic_service.System.Utility;
 using polyclinic_service.UserActions.Controllers.Interfaces;
 using polyclinic_service.UserActions.DTOs;
 using polyclinic_service.UserAppointments.DTOs;
-using polyclinic_service.UserAppointments.Models;
+
 using polyclinic_service.UserAppointments.Services.Interfaces;
 using polyclinic_service.Users.Models;
 using polyclinic_service.Users.Services.Interfaces;
@@ -80,13 +79,23 @@ public class UserActionsController : UserActionsApiController
         DateTime appointmentStartDate = request.AppointmentDate;
         DateTime appointmentEndDate = appointmentStartDate + TimeSpan.FromMinutes(request.Minutes);
 
+        int year = request.AppointmentDate.Year;
+        int weekNumber = DatesUtility.GetWeekNumberFromDate(request.AppointmentDate);
+        
         if (!await _scheduleQueryService.CheckIfAppointmentInDoctorSchedule(
                 doctor.Id,
-                request.AppointmentDate.Year,
-                DatesUtility.GetWeekNumberFromDate(request.AppointmentDate),
+                year,
+                weekNumber,
                 appointmentStartDate,
                 appointmentEndDate))
             return Conflict(Constants.APPOINTMENT_NOT_IN_SCHEDULE);
+        
+        DateTime startDay = new DateTime(request.AppointmentDate.Year, 1, 1); // First day of the year
+        DateTime startWeek = startDay.AddDays((weekNumber - 1) * 7 - (int)startDay.DayOfWeek + 1);
+        DateTime endWeek = startWeek.AddDays(7);
+
+        IEnumerable<FreeTimeSlotResponse> freeTime =
+            await _appointmentQueryService.GetFreeSlotsForInterval(doctor.Id, startWeek, endWeek);
 
         Appointment appointment = await _appointmentCommandService.CreateAppointment(new CreateAppointmentRequest
         {

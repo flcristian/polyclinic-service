@@ -37,6 +37,9 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<Schedule>()
+            .HasKey(s => s.Id);
+        
+        modelBuilder.Entity<Schedule>()
             .HasOne(s => s.MondaySchedule)
             .WithMany()
             .HasForeignKey(s => s.MondayScheduleId)
