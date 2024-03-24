@@ -55,7 +55,7 @@ public class AppointmentsController : AppointmentsApiController
             return NotFound(ex.Message);
         }
     }
-
+    
     public override async Task<ActionResult<GetAppointmentRequest>> GetAppointmentById(int id)
     {
         _logger.LogInformation($"Rest request: Get appointment with id {id}.");

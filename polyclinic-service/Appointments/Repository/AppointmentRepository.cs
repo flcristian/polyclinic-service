@@ -25,7 +25,7 @@ public class AppointmentRepository : IAppointmentRepository
                 .ThenInclude(userAppointment => userAppointment.User)
             .ToListAsync();
     }
-
+    
     public async Task<Appointment> GetByIdAsync(int id)
     {
         return (await _context.Appointments

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using polyclinic_service.Appointments.DTOs;
 using polyclinic_service.Appointments.Models;
 using polyclinic_service.System.Constants;
 using polyclinic_service.System.Exceptions;
@@ -130,13 +131,26 @@ public class UserAppointmentsController : UserAppointmentsApiController
         }
     }
     
-    public override async Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentsByUserId(int userId)
+    public override async Task<ActionResult<IEnumerable<GetAppointmentRequest>>> GetAppointmentsByUserId(int userId)
     {
         _logger.LogInformation($"Rest request: Get user appointments of the user with id {userId}.");
         try
         {
-            IEnumerable<Appointment> result = await _queryService.GetAppointmentsByUserId(userId);
+            List<Appointment> appointments = (await _queryService.GetAppointmentsByUserId(userId)).ToList();
 
+            List<GetAppointmentRequest> result = new List<GetAppointmentRequest>();
+            
+            appointments.ForEach(appointment =>
+            {
+                result.Add(new GetAppointmentRequest
+                {
+                    Id = appointment.Id,
+                    StartDate = appointment.StartDate,
+                    EndDate = appointment.EndDate,
+                    UserAppointments = ConvertUserAppointmentsToDTO(appointment.UserAppointments)
+                });
+            });
+            
             return Ok(result);
         }
         catch (ItemDoesNotExist ex)
@@ -146,13 +160,26 @@ public class UserAppointmentsController : UserAppointmentsApiController
         }
     }
     
-    public override async Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentHistoryOfUserByUserId(int userId)
+    public override async Task<ActionResult<IEnumerable<GetAppointmentRequest>>> GetAppointmentHistoryOfUserByUserId(int userId)
     {
         _logger.LogInformation($"Rest request: Get appointment history of the user with id {userId}.");
         try
         {
-            IEnumerable<Appointment> result = await _queryService.GetAppointmentHistoryByUserId(userId);
+            List<Appointment> appointments = (await _queryService.GetAppointmentHistoryByUserId(userId)).ToList();
 
+            List<GetAppointmentRequest> result = new List<GetAppointmentRequest>();
+            
+            appointments.ForEach(appointment =>
+            {
+                result.Add(new GetAppointmentRequest
+                {
+                    Id = appointment.Id,
+                    StartDate = appointment.StartDate,
+                    EndDate = appointment.EndDate,
+                    UserAppointments = ConvertUserAppointmentsToDTO(appointment.UserAppointments)
+                });
+            });
+            
             return Ok(result);
         }
         catch (ItemDoesNotExist ex)
@@ -160,5 +187,24 @@ public class UserAppointmentsController : UserAppointmentsApiController
             _logger.LogInformation($"Rest response: {ex.Message}");
             return NotFound(ex.Message);
         }
+    }
+    
+    // Private methods
+
+    private List<GetUserAppointmentRequest> ConvertUserAppointmentsToDTO(List<UserAppointment> userAppointments)
+    {
+        List<GetUserAppointmentRequest> result = new List<GetUserAppointmentRequest>();
+        
+        userAppointments.ForEach(ua =>
+        {
+            result.Add(new GetUserAppointmentRequest
+            {
+                Id = ua.Id,
+                User = ua.User,
+                Appointment = null
+            });
+        });
+
+        return result;
     }
 }

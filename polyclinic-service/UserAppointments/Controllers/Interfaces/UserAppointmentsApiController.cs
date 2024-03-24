@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using polyclinic_service.Appointments.DTOs;
 using polyclinic_service.Appointments.Models;
 using polyclinic_service.UserAppointments.DTOs;
 using polyclinic_service.UserAppointments.Models;
@@ -42,11 +43,11 @@ public abstract class UserAppointmentsApiController : ControllerBase
     [ProducesResponseType(statusCode:200,type:typeof(IEnumerable<Appointment>))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentsByUserId(int userId);
+    public abstract Task<ActionResult<IEnumerable<GetAppointmentRequest>>> GetAppointmentsByUserId(int userId);
     
     [HttpGet("appointment_history_of_user/{userId}")]
     [ProducesResponseType(statusCode:200,type:typeof(IEnumerable<Appointment>))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentHistoryOfUserByUserId(int userId);
+    public abstract Task<ActionResult<IEnumerable<GetAppointmentRequest>>> GetAppointmentHistoryOfUserByUserId(int userId);
 }
