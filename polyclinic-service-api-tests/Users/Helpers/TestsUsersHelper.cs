@@ -63,4 +63,34 @@ public static class TestsUsersHelper
             Type = UserType.Doctor
         };
     }
+
+    public static User CreateTestUserFromCreateRequest(int id, CreateUserRequest request)
+    {
+        return new User
+        {
+            Id = id,
+            Age = request.Age,
+            Gender = request.Gender,
+            Email = request.Email,
+            Name = request.Name,
+            Phone = request.Phone,
+            Password = request.Password,
+            Type = request.Type
+        };
+    }
+    
+    public static User CreateTestUserFromUpdateRequest(UpdateUserRequest request)
+    {
+        return new User
+        {
+            Id = request.Id,
+            Age = request.Age,
+            Gender = request.Gender,
+            Email = request.Email,
+            Name = request.Name,
+            Phone = request.Phone,
+            Password = request.Password,
+            Type = request.Type
+        };
+    }
 }

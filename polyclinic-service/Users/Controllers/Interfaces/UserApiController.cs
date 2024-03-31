@@ -6,7 +6,7 @@ namespace polyclinic_service.Users.Controllers.Interfaces;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-public abstract class UsersApiController : ControllerBase
+public abstract class UserApiController : ControllerBase
 {
     [HttpGet("all")]
     [ProducesResponseType(statusCode:200,type:typeof(IEnumerable<User>))]
@@ -22,11 +22,13 @@ public abstract class UsersApiController : ControllerBase
     
     [HttpPost("create")]
     [ProducesResponseType(statusCode:201,type:typeof(User))]
+    [ProducesResponseType(statusCode:400,type:typeof(string))]
     [Produces("application/json")]
     public abstract Task<ActionResult<User>> CreateUser([FromBody]CreateUserRequest userRequest);
     
     [HttpPut("update")]
     [ProducesResponseType(statusCode:202,type:typeof(User))]
+    [ProducesResponseType(statusCode:400,type:typeof(string))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
     public abstract Task<ActionResult<User>> UpdateUser([FromBody]UpdateUserRequest userRequest);

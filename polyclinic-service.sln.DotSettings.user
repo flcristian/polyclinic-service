@@ -2,7 +2,5 @@
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/ActualSeverity/@EntryValue">INFO</s:String>
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\qflor\AppData\Local\JetBrains\Rider2023.3\resharper-host\temp\Rider\vAny\CoverageData\_polyclinic-service.1704680181\Snapshot\snapshot.utdcvr</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9bab7d0b_002D6eea_002D4fc7_002Da612_002Dc6b6ef80e055/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="UserQueryServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.Users.UserQueryServiceTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;ProjectFolder&gt;7674B12D-5FB3-4E83-9580-E115C63FC8ED/d:Users&lt;/ProjectFolder&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

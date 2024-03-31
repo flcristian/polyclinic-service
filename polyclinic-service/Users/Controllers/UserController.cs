@@ -8,14 +8,14 @@ using polyclinic_service.Users.Services.Interfaces;
 
 namespace polyclinic_service.Users.Controllers;
 
-public class UsersController : UsersApiController
+public class UserController : UserApiController
 {
     private IUserQueryService _queryService;
     private IUserCommandService _commandService;
 
-    private ILogger<UsersController> _logger;
+    private ILogger<UserController> _logger;
     
-    public UsersController(IUserQueryService queryService, IUserCommandService commandService, ILogger<UsersController> logger)
+    public UserController(IUserQueryService queryService, IUserCommandService commandService, ILogger<UserController> logger)
     {
         _queryService = queryService;
         _commandService = commandService;
@@ -70,6 +70,11 @@ public class UsersController : UsersApiController
             User response = await _commandService.UpdateUser(userRequest);
 
             return Accepted(Constants.USER_UPDATED, response);
+        }
+        catch (ItemAlreadyExists ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return BadRequest(ex.Message);
         }
         catch (ItemDoesNotExist ex)
         {

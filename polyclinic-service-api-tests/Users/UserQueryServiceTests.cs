@@ -45,9 +45,6 @@ public class UserQueryServiceTests
         var result = await _service.GetAllUsers();
         
         Assert.NotNull(result);
-        
-        result = result.ToList();
-        
         Assert.Equal(2, result.Count());
         Assert.Equal(users, result, new UserEqualityComparer());
     }
@@ -143,7 +140,6 @@ public class UserQueryServiceTests
         var result = await _service.GetDoctorsByAppointmentsIncreasing();
         
         Assert.NotNull(result);
-        result = result.ToList();
         Assert.Equal(2, result.Count());
         Assert.Equal(doctors, result, new UserEqualityComparer());
     }
@@ -172,7 +168,6 @@ public class UserQueryServiceTests
         var result = await _service.GetDoctorsByAppointmentsDecreasing();
         
         Assert.NotNull(result);
-        result = result.ToList();
         Assert.Equal(2, result.Count());
         Assert.Equal(doctors, result, new UserEqualityComparer());
     }
@@ -201,7 +196,6 @@ public class UserQueryServiceTests
         var result = await _service.GetPatientsByAppointmentsIncreasing();
         
         Assert.NotNull(result);
-        result = result.ToList();
         Assert.Equal(2, result.Count());
         Assert.Equal(patients, result, new UserEqualityComparer());
     }
@@ -230,7 +224,6 @@ public class UserQueryServiceTests
         var result = await _service.GetPatientsByAppointmentsDecreasing();
         
         Assert.NotNull(result);
-        result = result.ToList();
         Assert.Equal(2, result.Count());
         Assert.Equal(patients, result, new UserEqualityComparer());
     }
