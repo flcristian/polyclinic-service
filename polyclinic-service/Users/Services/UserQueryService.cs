@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using polyclinic_service.System.Constants;
+﻿using polyclinic_service.System.Constants;
 using polyclinic_service.System.Exceptions;
 using polyclinic_service.Users.Models;
 using polyclinic_service.Users.Repository.Interfaces;
@@ -66,9 +65,9 @@ public class UserQueryService : IUserQueryService
 
     public async Task<IEnumerable<User>> GetDoctorsByAppointmentsDecreasing()
     {
-        IEnumerable<User> result = await _repository.GetDoctorsByAppointmentsDecreasingAsync();
+        List<User> result = (await _repository.GetDoctorsByAppointmentsDecreasingAsync()).ToList();
 
-        if (result.First().UserAppointments.Count == 0)
+        if (result.Count <= 0)
         {
             throw new ItemsDoNotExist(Constants.NO_DOCTORS_HAVE_APPOINTMENTS);
         }
@@ -78,9 +77,9 @@ public class UserQueryService : IUserQueryService
 
     public async Task<IEnumerable<User>> GetDoctorsByAppointmentsIncreasing()
     {
-        IEnumerable<User> result = await _repository.GetDoctorsByAppointmentsIncreasingAsync();
-        
-        if (result.Last().UserAppointments.Count == 0)
+        List<User> result = (await _repository.GetDoctorsByAppointmentsIncreasingAsync()).ToList();
+
+        if (result.Count <= 0)
         {
             throw new ItemsDoNotExist(Constants.NO_DOCTORS_HAVE_APPOINTMENTS);
         }
@@ -90,9 +89,9 @@ public class UserQueryService : IUserQueryService
     
     public async Task<IEnumerable<User>> GetPatientsByAppointmentsDecreasing()
     {
-        IEnumerable<User> result = await _repository.GetPatientsByAppointmentsDecreasingAsync();
+        List<User> result = (await _repository.GetPatientsByAppointmentsDecreasingAsync()).ToList();
 
-        if (result.First().UserAppointments.Count == 0)
+        if (result.Count <= 0)
         {
             throw new ItemsDoNotExist(Constants.NO_PATIENTS_HAVE_APPOINTMENTS);
         }
@@ -102,9 +101,9 @@ public class UserQueryService : IUserQueryService
 
     public async Task<IEnumerable<User>> GetPatientsByAppointmentsIncreasing()
     {
-        IEnumerable<User> result = await _repository.GetPatientsByAppointmentsIncreasingAsync();
-        
-        if (result.Last().UserAppointments.Count == 0)
+        List<User> result = (await _repository.GetPatientsByAppointmentsIncreasingAsync()).ToList();
+
+        if (result.Count <= 0)
         {
             throw new ItemsDoNotExist(Constants.NO_PATIENTS_HAVE_APPOINTMENTS);
         }

@@ -36,10 +36,10 @@ public class UserRepository : IUserRepository
             .ThenInclude(schedule => schedule.FridaySchedule)
             .ToListAsync();
     }
-
-    public async Task<User> GetByIdAsync(int id)
+    
+    public async Task<User?> GetByEmailAsync(string email)
     {
-        return (await _context.Users
+        return await _context.Users
             .Include(user => user.UserAppointments)
             .Include(user => user.Schedules)
             .ThenInclude(schedule => schedule.MondaySchedule)
@@ -51,7 +51,24 @@ public class UserRepository : IUserRepository
             .ThenInclude(schedule => schedule.ThursdaySchedule)
             .Include(user => user.Schedules)
             .ThenInclude(schedule => schedule.FridaySchedule)
-            .FirstOrDefaultAsync(user => user.Id == id))!;
+            .FirstOrDefaultAsync(user => user.Email == email);
+    }
+
+    public async Task<User?> GetByIdAsync(int id)
+    {
+        return await _context.Users
+            .Include(user => user.UserAppointments)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.MondaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.TuesdaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.WednesdaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.ThursdaySchedule)
+            .Include(user => user.Schedules)
+            .ThenInclude(schedule => schedule.FridaySchedule)
+            .FirstOrDefaultAsync(user => user.Id == id);
     }
 
     public async Task<User> CreateAsync(CreateUserRequest userRequest)

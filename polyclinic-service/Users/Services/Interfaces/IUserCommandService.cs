@@ -7,5 +7,5 @@ public interface IUserCommandService
 {
     Task<User> CreateUser(CreateUserRequest userRequest);
     Task<User> UpdateUser(UpdateUserRequest userRequest);
-    Task DeleteUser(int id);
+    Task<User> DeleteUser(int id);
 }

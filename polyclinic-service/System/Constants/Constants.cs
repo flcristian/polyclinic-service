@@ -31,6 +31,7 @@ public static class Constants
     public const string USER_APPOINTMENT_CREATED = "User appointment successfully created.";
     public const string USER_APPOINTMENT_UPDATED = "User appointment successfully updated.";
     public const string USER_APPOINTMENT_DELETED = "User appointment successfully deleted.";
+    public const string USER_EMAIL_ALREADY_USED = "Email is already in use.";
     
     // USERS
     public const string USER_CREATED = "User successfully created.";

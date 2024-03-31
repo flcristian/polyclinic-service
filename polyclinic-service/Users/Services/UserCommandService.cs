@@ -18,6 +18,11 @@ public class UserCommandService : IUserCommandService
 
     public async Task<User> CreateUser(CreateUserRequest userRequest)
     {
+        if (await _repository.GetByEmailAsync(userRequest.Email) != null)
+        {
+            throw new ItemAlreadyExists(Constants.USER_EMAIL_ALREADY_USED);
+        }
+        
         User user = await _repository.CreateAsync(userRequest);
 
         return user;
@@ -25,7 +30,12 @@ public class UserCommandService : IUserCommandService
 
     public async Task<User> UpdateUser(UpdateUserRequest userRequest)
     {
-        User user = await _repository.GetByIdAsync(userRequest.Id);
+        if (await _repository.GetByEmailAsync(userRequest.Email) != null)
+        {
+            throw new ItemAlreadyExists(Constants.USER_EMAIL_ALREADY_USED);
+        }
+        
+        User? user = await _repository.GetByIdAsync(userRequest.Id);
 
         if (user == null)
         {
@@ -37,9 +47,9 @@ public class UserCommandService : IUserCommandService
         return user;
     }
 
-    public async Task DeleteUser(int id)
+    public async Task<User> DeleteUser(int id)
     {
-        User user = await _repository.GetByIdAsync(id);
+        User? user = await _repository.GetByIdAsync(id);
 
         if (user == null)
         {
@@ -47,5 +57,7 @@ public class UserCommandService : IUserCommandService
         }
             
         await _repository.DeleteAsync(id);
+
+        return user;
     }
 }
