@@ -10,5 +10,5 @@ public interface IScheduleRepository
     Task<Schedule> GetByDoctorIdAndWeekIdentityAsync(GetByDoctorIdAndWeekIdentityRequest scheduleRequest);
     Task<Schedule> CreateAsync(CreateScheduleRequest ScheduleRequest);
     Task<Schedule> UpdateAsync(UpdateScheduleRequest ScheduleRequest);
-    Task DeleteAsync(DeleteScheduleRequest scheduleRequest);
+    Task<Schedule> DeleteAsync(DeleteScheduleRequest scheduleRequest);
 }

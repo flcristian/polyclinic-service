@@ -42,7 +42,7 @@ namespace polyclinic_service.Schedules.Services
             return schedule;
         }
 
-        public async Task DeleteSchedule(DeleteScheduleRequest scheduleRequest)
+        public async Task<Schedule> DeleteSchedule(DeleteScheduleRequest scheduleRequest)
         {
             Schedule schedule = await _repository.GetByDoctorIdAndWeekIdentityAsync(new GetByDoctorIdAndWeekIdentityRequest
             {
@@ -56,7 +56,7 @@ namespace polyclinic_service.Schedules.Services
                 throw new ItemDoesNotExist(Constants.SCHEDULE_DOES_NOT_EXIST);
             }
 
-            await _repository.DeleteAsync(scheduleRequest);
+            return await _repository.DeleteAsync(scheduleRequest);
         }
     }
 }

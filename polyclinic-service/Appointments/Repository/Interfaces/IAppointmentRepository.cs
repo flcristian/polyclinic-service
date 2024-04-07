@@ -13,6 +13,6 @@ public interface IAppointmentRepository
     Task<IEnumerable<OccupiedTimeSlotResponse>> GetOccupiedSlotsAsync(int userId, DateTime startDate, DateTime endDate);
     Task<IEnumerable<FreeTimeSlotResponse>> GetFreeSlotsInIntervalAsync(DateTime startDate, DateTime endDate);
     Task<IEnumerable<OccupiedTimeSlotResponse>> GetOccupiedSlotsInIntervalAsync(DateTime startDate, DateTime endDate);
-    Task DeleteAsync(int id);
+    Task<Appointment> DeleteAsync(int id);
     Task<DateResponse> DayWithMostAppointmentsInIntervalAsync(DateTime startDate, DateTime endDate);
 }

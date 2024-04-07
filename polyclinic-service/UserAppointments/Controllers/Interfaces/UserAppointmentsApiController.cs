@@ -37,7 +37,7 @@ public abstract class UserAppointmentsApiController : ControllerBase
     [ProducesResponseType(statusCode:202,type:typeof(String))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult> DeleteUserAppointment([FromRoute]int id);
+    public abstract Task<ActionResult<GetUserAppointmentRequest>> DeleteUserAppointment([FromRoute]int id);
 
     [HttpGet("appointments_of_user/{userId}")]
     [ProducesResponseType(statusCode:200,type:typeof(IEnumerable<Appointment>))]

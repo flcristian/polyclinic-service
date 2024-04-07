@@ -7,5 +7,5 @@ public interface IAppointmentCommandService
 {
     Task<Appointment> CreateAppointment(CreateAppointmentRequest appointmentRequest);
     Task<Appointment> UpdateAppointment(UpdateAppointmentRequest appointmentRequest);
-    Task DeleteAppointment(int id);
+    Task<Appointment> DeleteAppointment(int id);
 }

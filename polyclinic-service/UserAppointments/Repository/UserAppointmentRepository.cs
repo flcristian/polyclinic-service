@@ -63,10 +63,11 @@ public class UserAppointmentRepository : IUserAppointmentRepository
         return userAppointment;
     }
     
-    public async Task DeleteAsync(int id)
+    public async Task<UserAppointment> DeleteAsync(int id)
     {
         UserAppointment userAppointment = (await _context.UserAppointments.FindAsync(id))!;
         _context.UserAppointments.Remove(userAppointment);
         await _context.SaveChangesAsync();
+        return userAppointment;
     }
 }

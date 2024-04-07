@@ -115,14 +115,21 @@ public class UserAppointmentsController : UserAppointmentsApiController
         }
     }
 
-    public override async Task<ActionResult> DeleteUserAppointment(int id)
+    public override async Task<ActionResult<GetUserAppointmentRequest>> DeleteUserAppointment(int id)
     {
         _logger.LogInformation($"Rest request: Delete userAppointment with id {id}");
         try
         {
-            await _commandService.DeleteUserAppointment(id);
+            UserAppointment userAppointment = await _commandService.DeleteUserAppointment(id);
+            
+            GetUserAppointmentRequest response = new GetUserAppointmentRequest
+            {
+                Id = userAppointment.Id,
+                User = userAppointment.User,
+                Appointment = userAppointment.Appointment
+            };
 
-            return Accepted(Constants.USER_APPOINTMENT_DELETED, Constants.USER_APPOINTMENT_DELETED);
+            return Accepted(Constants.USER_APPOINTMENT_DELETED, response);
         }
         catch (ItemDoesNotExist ex)
         {

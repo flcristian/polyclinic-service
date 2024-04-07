@@ -37,7 +37,7 @@ public class AppointmentCommandService : IAppointmentCommandService
         return appointment;
     }
 
-    public async Task DeleteAppointment(int id)
+    public async Task<Appointment> DeleteAppointment(int id)
     {
         Appointment appointment = await _repository.GetByIdAsync(id);
 
@@ -46,6 +46,6 @@ public class AppointmentCommandService : IAppointmentCommandService
             throw new ItemDoesNotExist(Constants.APPOINTMENT_DOES_NOT_EXIST);
         }
             
-        await _repository.DeleteAsync(id);
+        return await _repository.DeleteAsync(id);
     }
 }

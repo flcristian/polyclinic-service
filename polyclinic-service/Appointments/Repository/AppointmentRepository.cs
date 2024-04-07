@@ -140,11 +140,12 @@ public class AppointmentRepository : IAppointmentRepository
         return occupiedSlots;
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task<Appointment> DeleteAsync(int id)
     {
         Appointment appointment = (await _context.Appointments.FindAsync(id))!;
         _context.Appointments.Remove(appointment);
         await _context.SaveChangesAsync();
+        return appointment;
     }
 
     public async Task<DateResponse> DayWithMostAppointmentsInIntervalAsync(DateTime startDate, DateTime endDate)

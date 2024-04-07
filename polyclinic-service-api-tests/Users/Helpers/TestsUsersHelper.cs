@@ -5,6 +5,42 @@ namespace polyclinic_service_api_tests.Users.Helpers;
 
 public static class TestsUsersHelper
 {
+    public static List<User> CreateTestUsers(int count)
+    {
+        List<User> users = new List<User>();
+
+        for (int i = 1; i <= count; i++)
+        {
+            users.Add(i % 2 == 0 ? CreateTestDoctor(i) : CreateTestPatient(i));
+        }
+
+        return users;
+    }
+    
+    public static List<User> CreateTestDoctors(int count)
+    {
+        List<User> users = new List<User>();
+
+        for (int i = 1; i <= count; i++)
+        {
+            users.Add(CreateTestDoctor(i));
+        }
+
+        return users;
+    }
+    
+    public static List<User> CreateTestPatients(int count)
+    {
+        List<User> users = new List<User>();
+
+        for (int i = 1; i <= count; i++)
+        {
+            users.Add(CreateTestPatient(i));
+        }
+
+        return users;
+    }
+    
     public static User CreateTestPatient(int id)
     {
         return new User

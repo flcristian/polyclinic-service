@@ -12,7 +12,6 @@ public class UserController : UserApiController
 {
     private IUserQueryService _queryService;
     private IUserCommandService _commandService;
-
     private ILogger<UserController> _logger;
     
     public UserController(IUserQueryService queryService, IUserCommandService commandService, ILogger<UserController> logger)
@@ -57,9 +56,17 @@ public class UserController : UserApiController
     public override async Task<ActionResult<User>> CreateUser(CreateUserRequest userRequest)
     {
         _logger.LogInformation($"Rest request: Create user with DTO:\n{userRequest}");
-        User response = await _commandService.CreateUser(userRequest);
+        try
+        {
+            User response = await _commandService.CreateUser(userRequest);
 
-        return Created(Constants.USER_CREATED, response);
+            return Created(Constants.USER_CREATED, response);
+        }
+        catch (ItemAlreadyExists ex)
+        {
+            _logger.LogInformation($"Rest response: {ex.Message}");
+            return BadRequest(ex.Message);
+        }
     }
 
     public override async Task<ActionResult<User>> UpdateUser(UpdateUserRequest userRequest)
@@ -83,14 +90,14 @@ public class UserController : UserApiController
         }
     }
 
-    public override async Task<ActionResult> DeleteUser(int id)
+    public override async Task<ActionResult<User>> DeleteUser(int id)
     {
         _logger.LogInformation($"Rest request: Delete user with id {id}");
         try
         {
-            await _commandService.DeleteUser(id);
+            User user = await _commandService.DeleteUser(id);
 
-            return Accepted(Constants.USER_DELETED, Constants.USER_DELETED);
+            return Accepted(Constants.USER_DELETED, user);
         }
         catch (ItemDoesNotExist ex)
         {

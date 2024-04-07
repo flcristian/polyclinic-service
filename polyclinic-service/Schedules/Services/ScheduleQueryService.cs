@@ -122,7 +122,7 @@ namespace polyclinic_service.Schedules.Services
             return appointmentStartTime >= _mapper.Map<TimeSpan>(scheduleSlotStartTime)
                    && appointmentEndTime <= _mapper.Map<TimeSpan>(scheduleSlotEndTime);
         }
-
+    
         private ScheduleSlot ChooseScheduleSlotDayFromDate(Schedule schedule, DateTime date)
         {
             DayOfWeek dayOfWeek = date.DayOfWeek;

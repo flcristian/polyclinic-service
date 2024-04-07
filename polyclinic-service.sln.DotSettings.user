@@ -2,5 +2,22 @@
 	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/ActualSeverity/@EntryValue">INFO</s:String>
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\qflor\AppData\Local\JetBrains\Rider2023.3\resharper-host\temp\Rider\vAny\CoverageData\_polyclinic-service.1704680181\Snapshot\snapshot.utdcvr</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9bab7d0b_002D6eea_002D4fc7_002Da612_002Dc6b6ef80e055/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="UserQueryServiceTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;ProjectFolder&gt;7674B12D-5FB3-4E83-9580-E115C63FC8ED/d:Users&lt;/ProjectFolder&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;ProjectFolder&gt;7674B12D-5FB3-4E83-9580-E115C63FC8ED/d:Users&lt;/ProjectFolder&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.Appointments.AppointmentQueryServiceTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.Appointments.AppointmentCommandServiceTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.Schedules.ScheduleQueryServiceTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.Schedules.ScheduleCommandServiceTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.UserAppointments.Services.Tests.UserAppointmentQueryServiceTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.UserAppointments.UserAppointmentQueryServiceTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.UserAppointments.UserAppointmentCommandServiceTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.Appointments.AppointmentsControllerTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.UserAppointments.UserAppointmentsIntegrationTests&lt;/TestId&gt;&#xD;
+      &lt;TestId&gt;xUnit::7674B12D-5FB3-4E83-9580-E115C63FC8ED::net8.0::polyclinic_service_api_tests.Appointments.AppointmentsIntegrationTests&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;ProjectFile&gt;7674B12D-5FB3-4E83-9580-E115C63FC8ED/d:UserAppointments/f:UserAppointmentsController.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;7674B12D-5FB3-4E83-9580-E115C63FC8ED/d:Schedules/f:SchedulesController.cs&lt;/ProjectFile&gt;&#xD;
+    &lt;ProjectFile&gt;7674B12D-5FB3-4E83-9580-E115C63FC8ED/d:Schedules/f:ScheduleIntegrationTests.cs&lt;/ProjectFile&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

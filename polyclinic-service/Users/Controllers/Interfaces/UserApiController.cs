@@ -37,7 +37,7 @@ public abstract class UserApiController : ControllerBase
     [ProducesResponseType(statusCode:202,type:typeof(String))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult> DeleteUser([FromRoute]int id);
+    public abstract Task<ActionResult<User>> DeleteUser([FromRoute]int id);
     
     [HttpGet("doctor_with_most_appointments")]
     [ProducesResponseType(statusCode:200,type:typeof(User))]

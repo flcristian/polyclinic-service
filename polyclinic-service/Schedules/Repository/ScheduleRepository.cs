@@ -113,7 +113,7 @@ namespace polyclinic_service.Schedules.Repository
             return scheduleSlot;
         }
 
-        public async Task DeleteAsync(DeleteScheduleRequest scheduleRequest)
+        public async Task<Schedule> DeleteAsync(DeleteScheduleRequest scheduleRequest)
         {
             Schedule schedule = (await _context.Schedules.FirstOrDefaultAsync(schedule => 
                 schedule.DoctorId == scheduleRequest.DoctorId &&
@@ -129,6 +129,7 @@ namespace polyclinic_service.Schedules.Repository
             
             _context.Schedules.Remove(schedule);
             await _context.SaveChangesAsync();
+            return schedule;
         }
     }
 }

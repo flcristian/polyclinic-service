@@ -38,9 +38,9 @@ public abstract class SchedulesApiController : ControllerBase
     [Produces("application/json")]
     public abstract Task<ActionResult<Schedule>> UpdateSchedule([FromBody]UpdateScheduleRequest scheduleRequest);
     
-    [HttpDelete("delete")]
+    [HttpPut("delete")]
     [ProducesResponseType(statusCode:202,type:typeof(String))]
     [ProducesResponseType(statusCode:404,type:typeof(String))]
     [Produces("application/json")]
-    public abstract Task<ActionResult> DeleteSchedule(DeleteScheduleRequest scheduleRequest);
+    public abstract Task<ActionResult<Schedule>> DeleteSchedule(DeleteScheduleRequest scheduleRequest);
 }

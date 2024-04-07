@@ -100,14 +100,14 @@ public class SchedulesController : SchedulesApiController
         }
     }
 
-    public override async Task<ActionResult> DeleteSchedule(DeleteScheduleRequest scheduleRequest)
+    public override async Task<ActionResult<Schedule>> DeleteSchedule(DeleteScheduleRequest scheduleRequest)
     {
         _logger.LogInformation($"Rest request: Delete schedule by DTO {scheduleRequest}");
         try
         {
-            await _commandService.DeleteSchedule(scheduleRequest);
+            Schedule schedule = await _commandService.DeleteSchedule(scheduleRequest);
 
-            return Accepted(Constants.SCHEDULE_DELETED, Constants.SCHEDULE_DELETED);
+            return Accepted(Constants.SCHEDULE_DELETED, schedule);
         }
         catch (ItemDoesNotExist ex)
         {
